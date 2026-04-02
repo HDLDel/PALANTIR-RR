@@ -1,0 +1,129 @@
+# ===========================================
+# Palantir - .gitignore
+# ===========================================
+
+# -------------------------------------------
+# Python
+# -------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# -------------------------------------------
+# PyInstaller
+# -------------------------------------------
+*.manifest
+*.spec.bak
+
+# -------------------------------------------
+# Ambientes Virtuais
+# -------------------------------------------
+venv/
+ENV/
+env/
+.venv
+
+# -------------------------------------------
+# IDEs
+# -------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# -------------------------------------------
+# Logs e Banco de Dados
+# -------------------------------------------
+*.log
+logs/
+*.db
+!downloads.db
+videos.db
+palantir.log
+
+# -------------------------------------------
+# Configurações Locais
+# -------------------------------------------
+.config/
+.env
+.env.local
+*.ini
+
+# -------------------------------------------
+# Arquivos de Build/Compilação
+# -------------------------------------------
+AppDir/
+*.AppImage
+*.tar.gz
+publish/
+
+# -------------------------------------------
+# Arquivos Temporários do Sistema
+# -------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# -------------------------------------------
+# Pasta de Módulos Não Usados
+# -------------------------------------------
+modulos/
+
+# -------------------------------------------
+# Arquivos Específicos do Projeto
+# -------------------------------------------
+# Ícones não utilizados
+Mitrilplay.ico
+Mitrilplay.png
+palantircli.png
+
+# Scripts de build na raiz (usar apenas os da pasta Compile/)
+build_appimage.py
+
+# Arquivos de configuração do aria2
+aria2.conf
+
+# Binários do sistema
+aria2c
+aria2c.exe
+appimagetool
+
+# -------------------------------------------
+# Manter (NÃO ignorar)
+# -------------------------------------------
+# Estes arquivos DEVEM ser versionados:
+# - downloads.db (banco de dados principal)
+# - config.json (configurações padrão)
+# - Palantir.spec
+# - Palantir-Linux.spec
+# - requirements.txt
+# - Compile/ (todos os scripts de build)
+# - Players/ (pasta com players)
+# - assets/ (recursos do projeto)

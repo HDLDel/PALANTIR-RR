@@ -170,7 +170,7 @@ def main():
     cmd = [
         sys.executable, "-m", "PyInstaller",
         "--name=Palantir",
-        "--windowed",
+        "--console",
         "--icon=palantir.png",
         "--add-data=advanced_downloader.py:.",
         "--add-data=organize_folders.py:.",

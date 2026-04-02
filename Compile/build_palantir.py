@@ -142,7 +142,7 @@ def create_onefolder_build():
     cmd = [
         sys.executable, "-m", "PyInstaller",
         "--name=Palantir",
-        "--windowed",
+        "--console",
         f"--icon={project_dir / 'Palantir.ico'}",
         f"--add-data={project_dir / 'advanced_downloader.py'}{sep}.",
         f"--add-data={project_dir / 'organize_folders.py'}{sep}.",
@@ -226,7 +226,7 @@ def create_onefile_build():
         sys.executable, "-m", "PyInstaller",
         "--name=Palantir",
         "--onefile",
-        "--windowed",
+        "--console",
         f"--icon={project_dir / 'Palantir.ico'}",
         "--hidden-import=customtkinter",
         "--hidden-import=ttkthemes",

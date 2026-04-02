@@ -198,7 +198,7 @@ def run_pyinstaller(output_name: str = "Palantir") -> bool:
     cmd = [
         sys.executable, "-m", "PyInstaller",
         f"--name={output_name}",
-        "--windowed",
+        "--console",
         f"--icon={PROJECT_DIR / 'palantir.png'}",
         "--clean",
         "--noconfirm",

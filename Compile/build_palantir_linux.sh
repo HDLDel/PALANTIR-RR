@@ -114,7 +114,7 @@ build_onefolder() {
 
     python3 -m PyInstaller \
         --name=Palantir \
-        --windowed \
+        --console \
         --clean \
         --noconfirm \
         --add-data="categorias.py:." \
