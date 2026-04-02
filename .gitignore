@@ -52,6 +52,7 @@ env/
 .project
 .pydevproject
 .settings/
+.qwen/
 
 # -------------------------------------------
 # Logs e Banco de Dados
