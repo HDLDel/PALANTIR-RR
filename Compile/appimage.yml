@@ -2,7 +2,7 @@ version: 1
 script:
   - pip3 install -r requirements.txt
   - pip3 install pyinstaller
-  - pyinstaller --onefile --windowed --icon=Palantir.ico --add-data "assets:assets" --add-data "*.json:." --add-data "*.conf:." Palantir.py
+  - pyinstaller --onefile --windowed --icon=palantir.png --add-data "assets:assets" --add-data "*.json:." --add-data "*.conf:." Palantir-Linux.py
 
 AppDir:
   path: ./AppDir

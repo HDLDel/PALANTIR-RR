@@ -4,7 +4,7 @@ cd /d "%~dp0"
 
 cls
 echo ======================================================
-echo           GIT AUTO-COMMIT - TheLordCLI
+echo           GIT AUTO-COMMIT - Palantir
 echo ======================================================
 echo.
 

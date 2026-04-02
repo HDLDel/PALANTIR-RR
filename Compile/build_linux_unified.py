@@ -38,14 +38,8 @@ PACKAGES_EXTRAS = [
 PROJECT_FILES = [
     "advanced_downloader.py",
     "organize_folders.py",
+    "organize_folders_wrapper.py",
     "categorias.py",
-    "database_manager.py",
-    "download_manager.py",
-    "m3u_handler.py",
-    "network_utils.py",
-    "player_manager.py",
-    "config_manager.py",
-    "search_engine.py",
 ]
 
 # Arquivos de dados

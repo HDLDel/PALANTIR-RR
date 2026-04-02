@@ -143,17 +143,10 @@ def create_onefolder_build():
         f"--icon={project_dir / 'Palantir.ico'}",
         f"--add-data={project_dir / 'advanced_downloader.py'};.",
         f"--add-data={project_dir / 'organize_folders.py'};.",
+        f"--add-data={project_dir / 'organize_folders_wrapper.py'};.",
         f"--add-data={project_dir / 'categorias.py'};.",
         f"--add-data={project_dir / 'downloads.db'};.",
         f"--add-data={project_dir / 'config.json'};.",
-        # Módulos auxiliares
-        f"--add-data={project_dir / 'database_manager.py'};.",
-        f"--add-data={project_dir / 'download_manager.py'};.",
-        f"--add-data={project_dir / 'm3u_handler.py'};.",
-        f"--add-data={project_dir / 'network_utils.py'};.",
-        f"--add-data={project_dir / 'player_manager.py'};.",
-        f"--add-data={project_dir / 'config_manager.py'};.",
-        f"--add-data={project_dir / 'search_engine.py'};.",
         "--hidden-import=customtkinter",
         "--hidden-import=ttkthemes",
         "--hidden-import=aria2p",
@@ -185,8 +178,8 @@ def create_onefolder_build():
         cmd.append(f"--add-data={project_dir / 'Players' / 'VLCPortable' / 'VLCPortable.exe'};Players/VLCPortable")
         print_info("Incluindo vlc.exe")
 
-    # Adiciona o script principal (TheLord.py na raiz)
-    cmd.append(str(project_dir / "TheLord.py"))
+    # Adiciona o script principal (Palantir-windows.py na raiz)
+    cmd.append(str(project_dir / "Palantir-windows.py"))
 
     print_info("Executando PyInstaller...")
     print_info(f"Comando: {' '.join(cmd)}")
@@ -247,7 +240,7 @@ def create_onefile_build():
     if (project_dir / "Players" / "VLCPortable" / "VLCPortable.exe").exists():
         cmd.append(f"--add-data={project_dir / 'Players' / 'VLCPortable' / 'VLCPortable.exe'};Players/VLCPortable")
 
-    cmd.append(str(project_dir / "TheLord.py"))
+    cmd.append(str(project_dir / "Palantir-windows.py"))
 
     print_info("Executando PyInstaller (OneFile)...")
 

@@ -11,10 +11,8 @@ import shutil
 from pathlib import Path
 
 def main():
-    # Usa a pasta raiz do projeto (pai da pasta Compile)
     script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
-    os.chdir(project_dir)
+    os.chdir(script_dir)
 
     print("=" * 60)
     print("        PALANTIR LINUX - BUILD APPIMAGE")
@@ -42,7 +40,7 @@ def main():
 
     # 3. Verificar/Instalar FUSE e ferramentas do AppImage
     print("\n[3/7] Verificando FUSE e ferramentas do AppImage...")
-
+    
     # Verificar/Instalar FUSE
     fuse_installed = False
     try:
@@ -53,16 +51,16 @@ def main():
             print("      [OK] FUSE já está instalado")
     except:
         pass
-
+    
     if not fuse_installed:
         print("      [!] FUSE não encontrado")
         print("          Instalando FUSE...")
-
+        
         # Detectar distribuição e instalar
         try:
             with open('/etc/os-release', 'r') as f:
                 os_info = f.read()
-
+            
             if 'fedora' in os_info.lower() or 'dnf' in os_info.lower():
                 # Fedora
                 print("      Detectado Fedora - Instalando via dnf...")
@@ -94,7 +92,7 @@ def main():
         except Exception as e:
             print(f"      [!] Falha ao instalar FUSE: {e}")
             print("          Instale manualmente para criar AppImage")
-
+    
     # Verificar appimagetool
     appimagetool_path = script_dir / "appimagetool"
     if not appimagetool_path.exists():
@@ -115,22 +113,22 @@ def main():
     # 4. Verificar executáveis
     print("\n[4/7] Verificando executáveis...")
 
-    # Verifica múltiplos caminhos possíveis para cada executável (na raiz do projeto)
+    # Verifica múltiplos caminhos possíveis para cada executável
     aria2c_paths = [
-        project_dir / "aria2c",              # Raiz (aria2c binário)
-        project_dir / "aria2c" / "aria2c",   # Pasta aria2c/
+        script_dir / "aria2c",              # Raiz (aria2c binário)
+        script_dir / "aria2c" / "aria2c",   # Pasta aria2c/
     ]
 
     mpv_paths = [
-        project_dir / "Players" / "mpv" / "mpv",
-        project_dir / "Players" / "mpv.AppImage",
-        project_dir / "Players" / "mpv" / "mpv.AppImage",
+        script_dir / "Players" / "mpv" / "mpv",
+        script_dir / "Players" / "mpv.AppImage",
+        script_dir / "Players" / "mpv" / "mpv.AppImage",
     ]
 
     vlc_paths = [
-        project_dir / "Players" / "VLCPortable" / "VLCPortable",
-        project_dir / "Players" / "VLC.AppImage",
-        project_dir / "Players" / "VLCPortable" / "VLC.AppImage",
+        script_dir / "Players" / "VLCPortable" / "VLCPortable",
+        script_dir / "Players" / "VLC.AppImage",
+        script_dir / "Players" / "VLCPortable" / "VLC.AppImage",
     ]
 
     # Verifica aria2c
@@ -138,7 +136,7 @@ def main():
     for path in aria2c_paths:
         if path.exists():
             aria2c_found = path
-            print(f"      [OK] aria2c: {path.relative_to(project_dir)}")
+            print(f"      [OK] aria2c: {path.relative_to(script_dir)}")
             break
     if not aria2c_found:
         print(f"      [ ] aria2c - não encontrado")
@@ -149,7 +147,7 @@ def main():
     for path in mpv_paths:
         if path.exists():
             mpv_found = path
-            print(f"      [OK] mpv: {path.relative_to(project_dir)}")
+            print(f"      [OK] mpv: {path.relative_to(script_dir)}")
             break
     if not mpv_found:
         print(f"      [ ] mpv - não encontrado na pasta Players/")
@@ -160,7 +158,7 @@ def main():
     for path in vlc_paths:
         if path.exists():
             vlc_found = path
-            print(f"      [OK] vlc: {path.relative_to(project_dir)}")
+            print(f"      [OK] vlc: {path.relative_to(script_dir)}")
             break
     if not vlc_found:
         print(f"      [ ] vlc - não encontrado na pasta Players/")
@@ -173,21 +171,14 @@ def main():
         sys.executable, "-m", "PyInstaller",
         "--name=Palantir",
         "--windowed",
-        f"--icon={project_dir / 'palantir.png'}",
-        f"--add-data={project_dir / 'advanced_downloader.py'}:.",
-        f"--add-data={project_dir / 'organize_folders.py'}:.",
-        f"--add-data={project_dir / 'categorias.py'}:.",
-        f"--add-data={project_dir / 'downloads.db'}:.",
-        f"--add-data={project_dir / 'config.json'}:.",
-        f"--add-data={project_dir / 'palantir.png'}:.",
-        # Módulos auxiliares
-        f"--add-data={project_dir / 'database_manager.py'}:.",
-        f"--add-data={project_dir / 'download_manager.py'}:.",
-        f"--add-data={project_dir / 'm3u_handler.py'}:.",
-        f"--add-data={project_dir / 'network_utils.py'}:.",
-        f"--add-data={project_dir / 'player_manager.py'}:.",
-        f"--add-data={project_dir / 'config_manager.py'}:.",
-        f"--add-data={project_dir / 'search_engine.py'}:.",
+        "--icon=palantir.png",
+        "--add-data=advanced_downloader.py:.",
+        "--add-data=organize_folders.py:.",
+        "--add-data=organize_folders_wrapper.py:.",
+        "--add-data=categorias.py:.",
+        "--add-data=downloads.db:.",
+        "--add-data=config.json:.",
+        "--add-data=palantir.png:.",
         "--hidden-import=customtkinter",
         "--hidden-import=ttkthemes",
         "--hidden-import=aria2p",
@@ -209,11 +200,24 @@ def main():
     if aria2c_found:
         cmd.append(f"--add-data={aria2c_found}:.")
 
-    # Adiciona o script principal (Palantir-Linux.py na raiz)
-    cmd.append(str(project_dir / "Palantir-Linux.py"))
+    # Adicionar mpv se existir (sempre dentro de Players/)
+    if mpv_found:
+        if "Players/mpv" in str(mpv_found).replace("\\", "/"):
+            cmd.append(f"--add-data={mpv_found}:Players/mpv")
+        elif "Players" in str(mpv_found):
+            cmd.append(f"--add-data={mpv_found}:Players")
+
+    # Adicionar vlc se existir (sempre dentro de Players/)
+    if vlc_found:
+        if "Players/VLCPortable" in str(vlc_found).replace("\\", "/"):
+            cmd.append(f"--add-data={vlc_found}:Players/VLCPortable")
+        elif "Players" in str(vlc_found):
+            cmd.append(f"--add-data={vlc_found}:Players")
+
+    cmd.append("Palantir-Linux.py")
 
     print("      Compilando...")
-    result = subprocess.run(cmd, cwd=project_dir)
+    result = subprocess.run(cmd, cwd=script_dir)
 
     if result.returncode == 0:
         print("      Build PyInstaller concluído com sucesso!")
@@ -224,8 +228,8 @@ def main():
     # 6. Criar AppDir
     print("\n[6/7] Criando AppDir...")
 
-    appdir = project_dir / "AppDir"
-    dist_folder = project_dir / "dist" / "Palantir"
+    appdir = script_dir / "AppDir"
+    dist_folder = script_dir / "dist" / "Palantir"
 
     # Limpa AppDir se existir
     if appdir.exists():
@@ -245,7 +249,7 @@ def main():
 
     # Copia conteúdo do dist para AppDir/usr/bin
     print("      Copiando arquivos para AppDir...")
-
+    
     # Copia executável principal
     exe_source = dist_folder / "Palantir"
     if exe_source.exists():
@@ -265,7 +269,7 @@ def main():
         print(f"      Copiado: Players/")
 
     # Copia config.json
-    config_source = project_dir / "config.json"
+    config_source = script_dir / "config.json"
     if config_source.exists():
         shutil.copy2(config_source, appdir / "usr" / "lib" / "Palantir" / "config.json")
         print(f"      Copiado: config.json")
@@ -299,9 +303,9 @@ Categories=AudioVideo;Video;
 '''
     with open(appdir / "usr" / "share" / "applications" / "palantir.desktop", "w") as f:
         f.write(desktop_content)
-
+    
     # Copia ícone
-    icon_source = project_dir / "palantir.png"
+    icon_source = script_dir / "palantir.png"
     if icon_source.exists():
         shutil.copy2(icon_source, appdir / "usr" / "share" / "icons" / "hicolor" / "256x256" / "apps" / "palantir.png")
         shutil.copy2(icon_source, appdir / "palantir.png")
@@ -315,8 +319,8 @@ Categories=AudioVideo;Video;
     # 7. Criar AppImage ou Alternativa
     print("\n[7/7] Criando AppImage...")
 
-    appimage_output = project_dir / "Palantir-x86_64.AppImage"
-
+    appimage_output = script_dir / "Palantir-x86_64.AppImage"
+    
     # Remove AppImage antigo se existir
     if appimage_output.exists():
         appimage_output.unlink()
@@ -326,17 +330,17 @@ Categories=AudioVideo;Video;
     def create_tarball():
         """Cria pacote tar.gz como alternativa ao AppImage"""
         print("      Criando pacote tar.gz...")
-
-        tarball_output = project_dir / "Palantir-Linux-x86_64.tar.gz"
-
+        
+        tarball_output = script_dir / "Palantir-Linux-x86_64.tar.gz"
+        
         import tarfile
-
+        
         with tarfile.open(tarball_output, "w:gz") as tar:
             # Adiciona AppDir ao tarball
             tar.add(appdir, arcname="Palantir")
-
+        
         size_mb = tarball_output.stat().st_size / (1024 * 1024)
-        print(f"      Pacote criado: {tarball_output.name} ({size_mb:.1f} MB)")
+        print(f"      Pacote criado: {tarball_output} ({size_mb:.1f} MB)")
         print(f"      Para usar: tar -xzf {tarball_output.name}")
         return tarball_output
 
@@ -362,7 +366,7 @@ Categories=AudioVideo;Video;
             result = subprocess.run(
                 [str(appimagetool_path), "-v", str(appdir), str(appimage_output)],
                 env=env,
-                cwd=project_dir
+                cwd=script_dir
             )
 
             if result.returncode == 0:
@@ -371,7 +375,7 @@ Categories=AudioVideo;Video;
                 print(f"      Erro ao criar AppImage (código {result.returncode})")
                 print("      Criando alternativa (tar.gz)...")
                 create_tarball()
-
+                
         except Exception as e:
             print(f"      Erro ao executar appimagetool: {e}")
             print("      Criando alternativa (tar.gz)...")
@@ -401,9 +405,9 @@ Categories=AudioVideo;Video;
         print()
         print("  Para distribuir:")
         print(f"  1. Copie o arquivo {appimage_output.name}")
-        print(f"  2. Distribua (funciona em qualquer distro)")
+        print(f"  2. Distribua (funciona em qualquer distro Linux)")
     else:
-        tarball_output = project_dir / "Palantir-Linux-x86_64.tar.gz"
+        tarball_output = script_dir / "Palantir-Linux-x86_64.tar.gz"
         if tarball_output.exists():
             size_mb = tarball_output.stat().st_size / (1024 * 1024)
             print(f"  BUILD CONCLUÍDO!")
