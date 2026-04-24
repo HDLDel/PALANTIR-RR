@@ -101,7 +101,7 @@ class QueueViewer:
                 # Trunca o caminho se for muito longo
                 pasta_display = os.path.basename(pasta) if len(pasta) > 20 else pasta
                 
-                queue_tree.insert("", tk.END, values=(i, nome_display, url_display, pasta_display))
+                queue_tree.insert("", tk.END, values=(i, nome_display, url_display, pasta_display, "❌"))
             
             # Frame para botões
             button_frame = ctk.CTkFrame(main_frame)
@@ -161,7 +161,9 @@ class QueueViewer:
             # Auto-atualização a cada 2 segundos
             def auto_atualizar():
                 if queue_window.winfo_exists():
-                    atualizar_fila()
+                    # Só atualiza automaticamente se o usuário não estiver selecionando nada
+                    if not queue_tree.selection():
+                        atualizar_fila()
                     queue_window.after(2000, auto_atualizar)
             
             # Inicia auto-atualização

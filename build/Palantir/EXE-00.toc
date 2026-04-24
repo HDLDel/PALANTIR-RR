@@ -1,5 +1,5 @@
 ('C:\\Users\\hilde\\Dev\\palantir-RR\\build\\Palantir\\Palantir.exe',
- False,
+ True,
  False,
  True,
  ['C:\\Users\\hilde\\Dev\\palantir-RR\\Palantir.ico'],
@@ -70,8 +70,8 @@
  [],
  False,
  False,
- 1775097852,
- [('runw.exe',
-   'C:\\Users\\hilde\\AppData\\Roaming\\Python\\Python311\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
+ 1777036971,
+ [('run.exe',
+   'C:\\Users\\hilde\\AppData\\Roaming\\Python\\Python311\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',
    'EXECUTABLE')],
  'C:\\Program Files\\Python311\\python311.dll')

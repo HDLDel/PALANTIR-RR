@@ -2936,6 +2936,17 @@ imported by:
  &#8226;   <a href="#aria2p.options">aria2p.options</a>
  &#8226;   <a href="#aria2p.stats">aria2p.stats</a>
  &#8226;   <a href="#aria2p.utils">aria2p.utils</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet._utils">chardet._utils</a>
+ &#8226;   <a href="#chardet._version">chardet._version</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.enums">chardet.enums</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.pipeline.binary">chardet.pipeline.binary</a>
+ &#8226;   <a href="#chardet.pipeline.bom">chardet.pipeline.bom</a>
+ &#8226;   <a href="#chardet.pipeline.markup">chardet.pipeline.markup</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
  &#8226;   <a href="#charset_normalizer">charset_normalizer</a>
  &#8226;   <a href="#charset_normalizer.api">charset_normalizer.api</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
@@ -3705,6 +3716,7 @@ imported by:
   <tt>_socket</tt> <span class="moduletype"><tt>C:\Program Files\Python311\DLLs\_socket.pyd</tt></span>  <div class="import">
 imported by:
     <a href="#socket">socket</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
 
   </div>
 
@@ -4001,6 +4013,7 @@ imported by:
  &#8226;   <a href="#platformdirs.api">platformdirs.api</a>
  &#8226;   <a href="#selectors">selectors</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
 
   </div>
 
@@ -4046,6 +4059,17 @@ imported by:
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
     <a href="#platformdirs.android">platformdirs.android</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="annotationlib"></a>
+  <a target="code" href="" type="text/plain"><tt>annotationlib</tt></a>
+<span class="moduletype">MissingModule</span>  <div class="import">
+imported by:
+    <a href="#typing_extensions">typing_extensions</a>
 
   </div>
 
@@ -4568,6 +4592,7 @@ imported by:
  &#8226;   <a href="#asyncio.streams">asyncio.streams</a>
  &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
  &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
 
   </div>
 
@@ -5401,6 +5426,7 @@ imported by:
  &#8226;   <a href="#subprocess">subprocess</a>
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tokenize">tokenize</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#warnings">warnings</a>
 
   </div>
@@ -5469,6 +5495,7 @@ imports:
 imported by:
     <a href="#Palantir-windows.py">Palantir-windows.py</a>
  &#8226;   <a href="#organize_folders">organize_folders</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
 
   </div>
 
@@ -5512,10 +5539,660 @@ imported by:
 
 <div class="node">
   <a name="chardet"></a>
-  <a target="code" href="" type="text/plain"><tt>chardet</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/__init__.py" type="text/plain"><tt>chardet</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet._utils">chardet._utils</a>
+ &#8226;   <a href="#chardet._version">chardet._version</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.enums">chardet.enums</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.pipeline.ascii">chardet.pipeline.ascii</a>
+ &#8226;   <a href="#chardet.pipeline.ascii__mypyc">chardet.pipeline.ascii__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.binary">chardet.pipeline.binary</a>
+ &#8226;   <a href="#chardet.pipeline.bom">chardet.pipeline.bom</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
+ &#8226;   <a href="#chardet.pipeline.confusion__mypyc">chardet.pipeline.confusion__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.escape">chardet.pipeline.escape</a>
+ &#8226;   <a href="#chardet.pipeline.escape__mypyc">chardet.pipeline.escape__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.magic">chardet.pipeline.magic</a>
+ &#8226;   <a href="#chardet.pipeline.magic__mypyc">chardet.pipeline.magic__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.markup">chardet.pipeline.markup</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator__mypyc">chardet.pipeline.orchestrator__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.statistical">chardet.pipeline.statistical</a>
+ &#8226;   <a href="#chardet.pipeline.statistical__mypyc">chardet.pipeline.statistical__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.structural">chardet.pipeline.structural</a>
+ &#8226;   <a href="#chardet.pipeline.structural__mypyc">chardet.pipeline.structural__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.utf1632">chardet.pipeline.utf1632</a>
+ &#8226;   <a href="#chardet.pipeline.utf1632__mypyc">chardet.pipeline.utf1632__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.utf8">chardet.pipeline.utf8</a>
+ &#8226;   <a href="#chardet.pipeline.utf8__mypyc">chardet.pipeline.utf8__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.validity">chardet.pipeline.validity</a>
+ &#8226;   <a href="#chardet.pipeline.validity__mypyc">chardet.pipeline.validity__mypyc</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#collections.abc">collections.abc</a>
+
+  </div>
+  <div class="import">
 imported by:
-    <a href="#requests">requests</a>
+    <a href="#chardet._utils">chardet._utils</a>
+ &#8226;   <a href="#chardet._version">chardet._version</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.enums">chardet.enums</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#requests">requests</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet._utils"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/_utils.py" type="text/plain"><tt>chardet._utils</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.pipeline.binary">chardet.pipeline.binary</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet._version"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/_version.py" type="text/plain"><tt>chardet._version</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet">chardet</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.detector"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/detector.py" type="text/plain"><tt>chardet.detector</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet._utils">chardet._utils</a>
+ &#8226;   <a href="#chardet.enums">chardet.enums</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#collections.abc">collections.abc</a>
+ &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.enums"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/enums.py" type="text/plain"><tt>chardet.enums</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#enum">enum</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.equivalences"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/equivalences.py" type="text/plain"><tt>chardet.equivalences</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#collections.abc">collections.abc</a>
+ &#8226;   <a href="#unicodedata">unicodedata</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.models"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/models/__init__.py" type="text/plain"><tt>chardet.models</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#importlib.resources">importlib.resources</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#struct">struct</a>
+ &#8226;   <a href="#warnings">warnings</a>
+ &#8226;   <a href="#zlib">zlib</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+ &#8226;   <a href="#chardet.pipeline.statistical">chardet.pipeline.statistical</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/pipeline/__init__.py" type="text/plain"><tt>chardet.pipeline</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#dataclasses">dataclasses</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.pipeline.ascii">chardet.pipeline.ascii</a>
+ &#8226;   <a href="#chardet.pipeline.ascii__mypyc">chardet.pipeline.ascii__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.binary">chardet.pipeline.binary</a>
+ &#8226;   <a href="#chardet.pipeline.bom">chardet.pipeline.bom</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
+ &#8226;   <a href="#chardet.pipeline.confusion__mypyc">chardet.pipeline.confusion__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.escape">chardet.pipeline.escape</a>
+ &#8226;   <a href="#chardet.pipeline.escape__mypyc">chardet.pipeline.escape__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.magic">chardet.pipeline.magic</a>
+ &#8226;   <a href="#chardet.pipeline.magic__mypyc">chardet.pipeline.magic__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.markup">chardet.pipeline.markup</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator__mypyc">chardet.pipeline.orchestrator__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.statistical">chardet.pipeline.statistical</a>
+ &#8226;   <a href="#chardet.pipeline.statistical__mypyc">chardet.pipeline.statistical__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.structural">chardet.pipeline.structural</a>
+ &#8226;   <a href="#chardet.pipeline.structural__mypyc">chardet.pipeline.structural__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.utf1632">chardet.pipeline.utf1632</a>
+ &#8226;   <a href="#chardet.pipeline.utf1632__mypyc">chardet.pipeline.utf1632__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.utf8">chardet.pipeline.utf8</a>
+ &#8226;   <a href="#chardet.pipeline.utf8__mypyc">chardet.pipeline.utf8__mypyc</a>
+ &#8226;   <a href="#chardet.pipeline.validity">chardet.pipeline.validity</a>
+ &#8226;   <a href="#chardet.pipeline.validity__mypyc">chardet.pipeline.validity__mypyc</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.ascii"></a>
+  <tt>chardet.pipeline.ascii</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\ascii.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.ascii__mypyc"></a>
+  <tt>chardet.pipeline.ascii__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\ascii__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.binary"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/pipeline/binary.py" type="text/plain"><tt>chardet.pipeline.binary</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet._utils">chardet._utils</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.bom"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/pipeline/bom.py" type="text/plain"><tt>chardet.pipeline.bom</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.confusion"></a>
+  <tt>chardet.pipeline.confusion</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\confusion.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#importlib.resources">importlib.resources</a>
+ &#8226;   <a href="#struct">struct</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.confusion__mypyc"></a>
+  <tt>chardet.pipeline.confusion__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\confusion__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.escape"></a>
+  <tt>chardet.pipeline.escape</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\escape.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.escape__mypyc"></a>
+  <tt>chardet.pipeline.escape__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\escape__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.magic"></a>
+  <tt>chardet.pipeline.magic</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\magic.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.magic__mypyc"></a>
+  <tt>chardet.pipeline.magic__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\magic__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.markup"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/pipeline/markup.py" type="text/plain"><tt>chardet.pipeline.markup</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#re">re</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.orchestrator"></a>
+  <tt>chardet.pipeline.orchestrator</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\orchestrator.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet._utils">chardet._utils</a>
+ &#8226;   <a href="#chardet.enums">chardet.enums</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.pipeline.ascii">chardet.pipeline.ascii</a>
+ &#8226;   <a href="#chardet.pipeline.binary">chardet.pipeline.binary</a>
+ &#8226;   <a href="#chardet.pipeline.bom">chardet.pipeline.bom</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
+ &#8226;   <a href="#chardet.pipeline.escape">chardet.pipeline.escape</a>
+ &#8226;   <a href="#chardet.pipeline.magic">chardet.pipeline.magic</a>
+ &#8226;   <a href="#chardet.pipeline.markup">chardet.pipeline.markup</a>
+ &#8226;   <a href="#chardet.pipeline.statistical">chardet.pipeline.statistical</a>
+ &#8226;   <a href="#chardet.pipeline.structural">chardet.pipeline.structural</a>
+ &#8226;   <a href="#chardet.pipeline.utf1632">chardet.pipeline.utf1632</a>
+ &#8226;   <a href="#chardet.pipeline.utf8">chardet.pipeline.utf8</a>
+ &#8226;   <a href="#chardet.pipeline.validity">chardet.pipeline.validity</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.orchestrator__mypyc"></a>
+  <tt>chardet.pipeline.orchestrator__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\orchestrator__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.statistical"></a>
+  <tt>chardet.pipeline.statistical</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\statistical.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.statistical__mypyc"></a>
+  <tt>chardet.pipeline.statistical__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\statistical__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.structural"></a>
+  <tt>chardet.pipeline.structural</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\structural.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#collections.abc">collections.abc</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.structural__mypyc"></a>
+  <tt>chardet.pipeline.structural__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\structural__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.utf1632"></a>
+  <tt>chardet.pipeline.utf1632</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\utf1632.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#unicodedata">unicodedata</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.utf1632__mypyc"></a>
+  <tt>chardet.pipeline.utf1632__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\utf1632__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.utf8"></a>
+  <tt>chardet.pipeline.utf8</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\utf8.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.utf8__mypyc"></a>
+  <tt>chardet.pipeline.utf8__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\utf8__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.validity"></a>
+  <tt>chardet.pipeline.validity</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\validity.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.pipeline.validity__mypyc"></a>
+  <tt>chardet.pipeline.validity__mypyc</tt> <span class="moduletype"><tt>C:\Users\hilde\AppData\Roaming\Python\Python311\site-packages\chardet\pipeline\validity__mypyc.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="chardet.registry"></a>
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/chardet/registry.py" type="text/plain"><tt>chardet.registry</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#__future__">__future__</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.enums">chardet.enums</a>
+ &#8226;   <a href="#codecs">codecs</a>
+ &#8226;   <a href="#collections.abc">collections.abc</a>
+ &#8226;   <a href="#dataclasses">dataclasses</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
+ &#8226;   <a href="#chardet.pipeline.markup">chardet.pipeline.markup</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
+ &#8226;   <a href="#chardet.pipeline.statistical">chardet.pipeline.statistical</a>
+ &#8226;   <a href="#chardet.pipeline.structural">chardet.pipeline.structural</a>
+ &#8226;   <a href="#chardet.pipeline.validity">chardet.pipeline.validity</a>
 
   </div>
 
@@ -5751,8 +6428,16 @@ imported by:
 
 <div class="node">
   <a name="clean_folders_module"></a>
-  <a target="code" href="" type="text/plain"><tt>clean_folders_module</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+  <a target="code" href="///C:/Users/hilde/Dev/palantir-RR/clean_folders_module.py" type="text/plain"><tt>clean_folders_module</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#os">os</a>
+ &#8226;   <a href="#shutil">shutil</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#time">time</a>
+
+  </div>
+  <div class="import">
 imported by:
     <a href="#organize_folders_wrapper">organize_folders_wrapper</a>
 
@@ -5776,6 +6461,7 @@ imported by:
     <a href="#PIL.PdfParser">PIL.PdfParser</a>
  &#8226;   <a href="#Palantir-windows.py">Palantir-windows.py</a>
  &#8226;   <a href="#_pickle">_pickle</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
  &#8226;   <a href="#charset_normalizer.constant">charset_normalizer.constant</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
@@ -5978,6 +6664,7 @@ imported by:
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tokenize">tokenize</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib3._collections">urllib3._collections</a>
  &#8226;   <a href="#urllib3.response">urllib3.response</a>
@@ -6014,6 +6701,11 @@ imported by:
  &#8226;   <a href="#aria2p.api">aria2p.api</a>
  &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
  &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#chardet">chardet</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.pipeline.structural">chardet.pipeline.structural</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
  &#8226;   <a href="#configparser">configparser</a>
  &#8226;   <a href="#http.client">http.client</a>
  &#8226;   <a href="#inspect">inspect</a>
@@ -6029,6 +6721,7 @@ imported by:
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#xml.etree.ElementTree">xml.etree.ElementTree</a>
 
   </div>
@@ -6353,6 +7046,7 @@ imported by:
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#ttkthemes._utils">ttkthemes._utils</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
  &#8226;   <a href="#urllib3.contrib.emscripten.response">urllib3.contrib.emscripten.response</a>
  &#8226;   <a href="#urllib3.response">urllib3.response</a>
@@ -7928,7 +8622,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#pprint">pprint</a>
+    <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
+ &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#urllib3.contrib.emscripten.request">urllib3.contrib.emscripten.request</a>
  &#8226;   <a href="#urllib3.contrib.emscripten.response">urllib3.contrib.emscripten.response</a>
 
@@ -11049,6 +11745,7 @@ imported by:
  &#8226;   <a href="#asyncio.runners">asyncio.runners</a>
  &#8226;   <a href="#asyncio.sslproto">asyncio.sslproto</a>
  &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#chardet.enums">chardet.enums</a>
  &#8226;   <a href="#http">http</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#py_compile">py_compile</a>
@@ -11057,6 +11754,7 @@ imported by:
  &#8226;   <a href="#socket">socket</a>
  &#8226;   <a href="#ssl">ssl</a>
  &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#urllib3._collections">urllib3._collections</a>
  &#8226;   <a href="#urllib3.util.request">urllib3.util.request</a>
  &#8226;   <a href="#urllib3.util.timeout">urllib3.util.timeout</a>
@@ -11218,6 +11916,9 @@ imported by:
  &#8226;   <a href="#asyncio.selector_events">asyncio.selector_events</a>
  &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
  &#8226;   <a href="#asyncio.threads">asyncio.threads</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
  &#8226;   <a href="#charset_normalizer.md">charset_normalizer.md</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
@@ -11262,6 +11963,7 @@ imported by:
  &#8226;   <a href="#tracemalloc">tracemalloc</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib3.poolmanager">urllib3.poolmanager</a>
  &#8226;   <a href="#urllib3.util.wait">urllib3.util.wait</a>
@@ -11763,6 +12465,7 @@ imports:
  &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib._bootstrap">importlib._bootstrap</a>
  &#8226;   <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
+ &#8226;   <a href="#importlib.machinery">importlib.machinery</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#warnings">warnings</a>
 
@@ -11899,6 +12602,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#ctypes.util">ctypes.util</a>
+ &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#pkgutil">pkgutil</a>
@@ -12099,6 +12803,8 @@ imports:
   <div class="import">
 imported by:
     <a href="#certifi.core">certifi.core</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
  &#8226;   <a href="#importlib.resources">importlib.resources</a>
  &#8226;   <a href="#importlib.resources._adapters">importlib.resources._adapters</a>
  &#8226;   <a href="#importlib.resources._common">importlib.resources._common</a>
@@ -12314,6 +13020,7 @@ imported by:
  &#8226;   <a href="#loguru._simple_sinks">loguru._simple_sinks</a>
  &#8226;   <a href="#pkgutil">pkgutil</a>
  &#8226;   <a href="#pyi_rth_inspect.py">pyi_rth_inspect.py</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#websocket._app">websocket._app</a>
  &#8226;   <a href="#websocket._dispatcher">websocket._dispatcher</a>
 
@@ -12398,6 +13105,7 @@ imported by:
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#tokenize">tokenize</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#unidecode.util">unidecode.util</a>
  &#8226;   <a href="#urllib.error">urllib.error</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
@@ -12549,6 +13257,7 @@ imported by:
  &#8226;   <a href="#json.encoder">json.encoder</a>
  &#8226;   <a href="#json.scanner">json.scanner</a>
  &#8226;   <a href="#loguru._handler">loguru._handler</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#requests.compat">requests.compat</a>
  &#8226;   <a href="#urllib3._request_methods">urllib3._request_methods</a>
  &#8226;   <a href="#urllib3.contrib.emscripten.fetch">urllib3.contrib.emscripten.fetch</a>
@@ -12626,6 +13335,7 @@ imported by:
  &#8226;   <a href="#dataclasses">dataclasses</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#loguru._better_exceptions">loguru._better_exceptions</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
 
   </div>
 
@@ -13246,6 +13956,7 @@ imported by:
  &#8226;   <a href="#PIL.TiffImagePlugin">PIL.TiffImagePlugin</a>
  &#8226;   <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
  &#8226;   <a href="#customtkinter.windows.widgets.core_rendering.draw_engine">customtkinter.windows.widgets.core_rendering.draw_engine</a>
  &#8226;   <a href="#customtkinter.windows.widgets.ctk_progressbar">customtkinter.windows.widgets.ctk_progressbar</a>
  &#8226;   <a href="#datetime">datetime</a>
@@ -14290,6 +15001,7 @@ imported by:
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
 
   </div>
 
@@ -14331,8 +15043,23 @@ imported by:
 
 <div class="node">
   <a name="organize_folders_module"></a>
-  <a target="code" href="" type="text/plain"><tt>organize_folders_module</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+  <a target="code" href="///C:/Users/hilde/Dev/palantir-RR/organize_folders_module.py" type="text/plain"><tt>organize_folders_module</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#categorias">categorias</a>
+ &#8226;   <a href="#json">json</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#re">re</a>
+ &#8226;   <a href="#requests">requests</a>
+ &#8226;   <a href="#shutil">shutil</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#time">time</a>
+ &#8226;   <a href="#unicodedata">unicodedata</a>
+ &#8226;   <a href="#unidecode">unidecode</a>
+ &#8226;   <a href="#urllib.parse">urllib.parse</a>
+
+  </div>
+  <div class="import">
 imported by:
     <a href="#organize_folders_wrapper">organize_folders_wrapper</a>
 
@@ -14424,6 +15151,7 @@ imported by:
  &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
  &#8226;   <a href="#bz2">bz2</a>
  &#8226;   <a href="#charset_normalizer.api">charset_normalizer.api</a>
+ &#8226;   <a href="#clean_folders_module">clean_folders_module</a>
  &#8226;   <a href="#colorama.ansitowin32">colorama.ansitowin32</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
@@ -14488,6 +15216,7 @@ imported by:
  &#8226;   <a href="#netrc">netrc</a>
  &#8226;   <a href="#ntpath">ntpath</a>
  &#8226;   <a href="#organize_folders">organize_folders</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#organize_folders_wrapper">organize_folders_wrapper</a>
  &#8226;   <a href="#os.path">os.path</a>
  &#8226;   <a href="#pathlib">pathlib</a>
@@ -15241,6 +15970,7 @@ imported by:
  &#8226;   <a href="#advanced_downloader">advanced_downloader</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#base64">base64</a>
+ &#8226;   <a href="#chardet.pipeline.markup">chardet.pipeline.markup</a>
  &#8226;   <a href="#charset_normalizer.constant">charset_normalizer.constant</a>
  &#8226;   <a href="#charset_normalizer.models">charset_normalizer.models</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
@@ -15288,6 +16018,7 @@ imported by:
  &#8226;   <a href="#loguru._logger">loguru._logger</a>
  &#8226;   <a href="#loguru._string_parsers">loguru._string_parsers</a>
  &#8226;   <a href="#organize_folders">organize_folders</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#packaging.version">packaging.version</a>
  &#8226;   <a href="#pathlib">pathlib</a>
  &#8226;   <a href="#pickle">pickle</a>
@@ -15470,6 +16201,7 @@ imported by:
  &#8226;   <a href="#advanced_downloader">advanced_downloader</a>
  &#8226;   <a href="#aria2p.client">aria2p.client</a>
  &#8226;   <a href="#organize_folders">organize_folders</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#requests">requests</a>
  &#8226;   <a href="#requests.__version__">requests.__version__</a>
  &#8226;   <a href="#requests._internal_utils">requests._internal_utils</a>
@@ -16046,11 +16778,13 @@ imported by:
  &#8226;   <a href="#advanced_downloader">advanced_downloader</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#aria2p.api">aria2p.api</a>
+ &#8226;   <a href="#clean_folders_module">clean_folders_module</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#customtkinter.windows.widgets.font.font_manager">customtkinter.windows.widgets.font.font_manager</a>
  &#8226;   <a href="#loguru._file_sink">loguru._file_sink</a>
  &#8226;   <a href="#multiprocessing.util">multiprocessing.util</a>
  &#8226;   <a href="#organize_folders">organize_folders</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#tarfile">tarfile</a>
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#ttkthemes._utils">ttkthemes._utils</a>
@@ -16458,6 +17192,8 @@ imported by:
  &#8226;   <a href="#PIL._binary">PIL._binary</a>
  &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
  &#8226;   <a href="#base64">base64</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
  &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
  &#8226;   <a href="#gettext">gettext</a>
@@ -16575,6 +17311,7 @@ imported by:
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#certifi.core">certifi.core</a>
  &#8226;   <a href="#charset_normalizer.md">charset_normalizer.md</a>
+ &#8226;   <a href="#clean_folders_module">clean_folders_module</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#colorama.ansitowin32">colorama.ansitowin32</a>
@@ -16664,6 +17401,7 @@ imported by:
  &#8226;   <a href="#multiprocessing.synchronize">multiprocessing.synchronize</a>
  &#8226;   <a href="#multiprocessing.util">multiprocessing.util</a>
  &#8226;   <a href="#ntpath">ntpath</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#organize_folders_wrapper">organize_folders_wrapper</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#packaging.version">packaging.version</a>
@@ -16706,6 +17444,7 @@ imported by:
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#unidecode.util">unidecode.util</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
@@ -16954,6 +17693,7 @@ imported by:
  &#8226;   <a href="#advanced_downloader">advanced_downloader</a>
  &#8226;   <a href="#asyncio.base_events">asyncio.base_events</a>
  &#8226;   <a href="#asyncio.windows_events">asyncio.windows_events</a>
+ &#8226;   <a href="#clean_folders_module">clean_folders_module</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#email._parseaddr">email._parseaddr</a>
@@ -16970,6 +17710,7 @@ imported by:
  &#8226;   <a href="#multiprocessing.pool">multiprocessing.pool</a>
  &#8226;   <a href="#multiprocessing.queues">multiprocessing.queues</a>
  &#8226;   <a href="#multiprocessing.synchronize">multiprocessing.synchronize</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#queue">queue</a>
  &#8226;   <a href="#random">random</a>
@@ -17560,6 +18301,8 @@ imported by:
  &#8226;   <a href="#asyncio.queues">asyncio.queues</a>
  &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
  &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
  &#8226;   <a href="#concurrent.futures._base">concurrent.futures._base</a>
  &#8226;   <a href="#concurrent.futures.thread">concurrent.futures.thread</a>
  &#8226;   <a href="#contextlib">contextlib</a>
@@ -17592,6 +18335,7 @@ imported by:
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tomllib._parser">tomllib._parser</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib3.connectionpool">urllib3.connectionpool</a>
  &#8226;   <a href="#urllib3.http2.connection">urllib3.http2.connection</a>
@@ -17687,6 +18431,9 @@ imported by:
  &#8226;   <a href="#aria2p.utils">aria2p.utils</a>
  &#8226;   <a href="#asyncio.staggered">asyncio.staggered</a>
  &#8226;   <a href="#asyncio.timeouts">asyncio.timeouts</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.pipeline">chardet.pipeline</a>
+ &#8226;   <a href="#chardet.registry">chardet.registry</a>
  &#8226;   <a href="#charset_normalizer.api">charset_normalizer.api</a>
  &#8226;   <a href="#charset_normalizer.cd">charset_normalizer.cd</a>
  &#8226;   <a href="#charset_normalizer.legacy">charset_normalizer.legacy</a>
@@ -17749,6 +18496,7 @@ imported by:
  &#8226;   <a href="#tomllib._parser">tomllib._parser</a>
  &#8226;   <a href="#tomllib._re">tomllib._re</a>
  &#8226;   <a href="#tomllib._types">tomllib._types</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#unidecode">unidecode</a>
  &#8226;   <a href="#urllib3">urllib3</a>
  &#8226;   <a href="#urllib3._base_connection">urllib3._base_connection</a>
@@ -17796,8 +18544,30 @@ imported by:
 
 <div class="node">
   <a name="typing_extensions"></a>
-  <a target="code" href="" type="text/plain"><tt>typing_extensions</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+  <a target="code" href="///C:/Users/hilde/AppData/Roaming/Python/Python311/site-packages/typing_extensions.py" type="text/plain"><tt>typing_extensions</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#_socket">_socket</a>
+ &#8226;   <a href="#abc">abc</a>
+ &#8226;   <a href="#annotationlib">annotationlib</a>
+ &#8226;   <a href="#asyncio.coroutines">asyncio.coroutines</a>
+ &#8226;   <a href="#builtins">builtins</a>
+ &#8226;   <a href="#collections">collections</a>
+ &#8226;   <a href="#collections.abc">collections.abc</a>
+ &#8226;   <a href="#contextlib">contextlib</a>
+ &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#functools">functools</a>
+ &#8226;   <a href="#inspect">inspect</a>
+ &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#keyword">keyword</a>
+ &#8226;   <a href="#operator">operator</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
 imported by:
     <a href="#charset_normalizer.md">charset_normalizer.md</a>
  &#8226;   <a href="#customtkinter.windows.widgets.core_widget_classes.ctk_base_class">customtkinter.windows.widgets.core_widget_classes.ctk_base_class</a>
@@ -17824,10 +18594,13 @@ imported by:
 imported by:
     <a href="#Palantir-windows.py">Palantir-windows.py</a>
  &#8226;   <a href="#categorias">categorias</a>
+ &#8226;   <a href="#chardet.equivalences">chardet.equivalences</a>
+ &#8226;   <a href="#chardet.pipeline.utf1632">chardet.pipeline.utf1632</a>
  &#8226;   <a href="#charset_normalizer.utils">charset_normalizer.utils</a>
  &#8226;   <a href="#encodings.idna">encodings.idna</a>
  &#8226;   <a href="#idna.core">idna.core</a>
  &#8226;   <a href="#organize_folders">organize_folders</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#re._parser">re._parser</a>
  &#8226;   <a href="#stringprep">stringprep</a>
  &#8226;   <a href="#traceback">traceback</a>
@@ -18042,6 +18815,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#Palantir-windows.py">Palantir-windows.py</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#unidecode">unidecode</a>
  &#8226;   <a href="#unidecode.__main__">unidecode.__main__</a>
  &#8226;   <a href="#unidecode.util">unidecode.util</a>
@@ -21377,6 +22151,7 @@ imported by:
  &#8226;   <a href="#mimetypes">mimetypes</a>
  &#8226;   <a href="#nturl2path">nturl2path</a>
  &#8226;   <a href="#organize_folders">organize_folders</a>
+ &#8226;   <a href="#organize_folders_module">organize_folders_module</a>
  &#8226;   <a href="#pathlib">pathlib</a>
  &#8226;   <a href="#requests.compat">requests.compat</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
@@ -22596,6 +23371,11 @@ imported by:
  &#8226;   <a href="#asyncio.tasks">asyncio.tasks</a>
  &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
  &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
+ &#8226;   <a href="#chardet._utils">chardet._utils</a>
+ &#8226;   <a href="#chardet.detector">chardet.detector</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
+ &#8226;   <a href="#chardet.pipeline.confusion">chardet.pipeline.confusion</a>
+ &#8226;   <a href="#chardet.pipeline.orchestrator">chardet.pipeline.orchestrator</a>
  &#8226;   <a href="#charset_normalizer.legacy">charset_normalizer.legacy</a>
  &#8226;   <a href="#configparser">configparser</a>
  &#8226;   <a href="#customtkinter.windows.widgets.core_widget_classes.ctk_base_class">customtkinter.windows.widgets.core_widget_classes.ctk_base_class</a>
@@ -22646,6 +23426,7 @@ imported by:
  &#8226;   <a href="#tempfile">tempfile</a>
  &#8226;   <a href="#threading">threading</a>
  &#8226;   <a href="#typing">typing</a>
+ &#8226;   <a href="#typing_extensions">typing_extensions</a>
  &#8226;   <a href="#unidecode">unidecode</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
@@ -23585,6 +24366,7 @@ imported by:
 imported by:
     <a href="#PIL.PdfParser">PIL.PdfParser</a>
  &#8226;   <a href="#PIL.PngImagePlugin">PIL.PngImagePlugin</a>
+ &#8226;   <a href="#chardet.models">chardet.models</a>
  &#8226;   <a href="#encodings.zlib_codec">encodings.zlib_codec</a>
  &#8226;   <a href="#gzip">gzip</a>
  &#8226;   <a href="#shutil">shutil</a>

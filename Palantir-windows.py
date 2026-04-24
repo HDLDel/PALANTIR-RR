@@ -224,7 +224,7 @@ class Palantir:
             # Método 4: Atualiza AppUserModelID (importante para barra de tarefas)
             try:
                 import ctypes
-                myappid = 'palantir.app.V3.5.34'
+                myappid = 'palantir.app.V3.5.39'
                 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
                 
                 # Define o ícone do AppUserModelID
@@ -317,7 +317,7 @@ class Palantir:
             self.root.set_theme(self.active_theme)
         except Exception as e:
             print(f"Erro ao aplicar o tema {self.active_theme}: {e}")
-        self.root.title("Palantir Versão V3.5.34")
+        self.root.title("Palantir Versão V3.5.39")
         # Maximiza de forma cross-platform
         if platform.system() == "Windows":
             self.root.state('zoomed')
@@ -1199,11 +1199,18 @@ class Palantir:
                     messagebox.showwarning("Aviso", "Selecione um item para remover.")
                     return
 
-                item_values = queue_tree.item(selected[0], 'values')
-                posicao = int(item_values[0])  # A posição é o primeiro valor
-                if self.remover_item_fila(posicao):
+                # Coleta as posições de todos os itens selecionados e ordena de forma decrescente
+                # para evitar que a remoção de um item altere os índices dos próximos
+                posicoes = sorted([int(queue_tree.item(item, 'values')[0]) for item in selected], reverse=True)
+
+                removidos = 0
+                for posicao in posicoes:
+                    if self.remover_item_fila(posicao):
+                        removidos += 1
+
+                if removidos > 0:
                     atualizar_fila()
-                    messagebox.showinfo("Sucesso", "Item removido da fila.")
+                    messagebox.showinfo("Sucesso", f"{removidos} item(ns) removido(s) da fila.")
 
             remover_button = ctk.CTkButton(
                 button_frame,
@@ -1227,7 +1234,9 @@ class Palantir:
             # Atualização automática a cada 3 segundos
             def auto_atualizar():
                 if queue_window.winfo_exists():
-                    atualizar_fila()
+                    # Só atualiza automaticamente se o usuário não estiver selecionando nada
+                    if not queue_tree.selection():
+                        atualizar_fila()
                     queue_window.after(3000, auto_atualizar)
 
             queue_window.after(3000, auto_atualizar)
