@@ -353,53 +353,25 @@ class Palantir:
     def start_aria2c(self):
         """Inicia o servidor aria2c"""
         try:
-            base_dir = get_base_dir()
-            aria2c_path = None
-            process = None
-
-            # 1. Prioridade: aria2c da pasta (binário incluso)
-            local_aria2c = os.path.join(base_dir, 'aria2c')
-            if os.path.exists(local_aria2c):
-                print(f"Tentando aria2c da pasta: {local_aria2c}")
-                try:
-                    process = subprocess.Popen(
-                        [local_aria2c, "--enable-rpc", "--rpc-listen-all=true", "--rpc-allow-origin-all", "--daemon=false"],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL,
-                        start_new_session=True
-                    )
-                    time.sleep(3)
-                    if process.poll() is None:
-                        aria2c_path = local_aria2c
-                        print(f"aria2c da pasta iniciado com PID: {process.pid}")
-                    else:
-                        print(f"AVISO: aria2c da pasta falhou ao iniciar (PID {process.pid}). Usando fallback.")
-                        process = None
-                except Exception as e:
-                    print(f"AVISO: Erro ao executar aria2c da pasta: {e}. Usando fallback.")
-                    process = None
-
-            # 2. Fallback: aria2c do PATH do sistema
-            if not aria2c_path:
-                aria2c_path = 'aria2c'
-                print(f"Tentando aria2c do PATH: {aria2c_path}")
-                process = subprocess.Popen(
-                    [aria2c_path, "--enable-rpc", "--rpc-listen-all=true"],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    start_new_session=True
-                )
-                time.sleep(3)
-                if process.poll() is None:
-                    print(f"aria2c do PATH iniciado com PID: {process.pid}")
-                else:
-                    raise FileNotFoundError(f"aria2c do PATH também falhou ao iniciar (PID {process.poll()})")
+            aria2c_path = 'aria2c'
+            print(f"Tentando aria2c do PATH: {aria2c_path}")
+            process = subprocess.Popen(
+                [aria2c_path, "--enable-rpc", "--rpc-listen-all=true", "--rpc-allow-origin-all", "--daemon=false"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                start_new_session=True
+            )
+            time.sleep(3)
+            if process.poll() is None:
+                print(f"aria2c do PATH iniciado com PID: {process.pid}")
+            else:
+                raise FileNotFoundError(f"aria2c do PATH falhou ao iniciar (PID {process.poll()})")
 
             print(f"Usando aria2c: {aria2c_path}")
 
         except FileNotFoundError as e:
             print(f"ERRO: aria2c não encontrado: {e}")
-            messagebox.showerror("Erro", "aria2c não encontrado. Por favor, instale o aria2 primeiro.\n\nNo Fedora: sudo dnf install aria2\nNo Ubuntu: sudo apt install aria2")
+            messagebox.showerror("Erro", "aria2c não encontrado. Por favor, instale o aria2 primeiro.\n\nNo Fedora: sudo dnf install aria2\nNo Ubuntu: sudo apt install aria2\nNo Arch Linux: sudo pacman -S aria2")
             sys.exit(1)
         except Exception as e:
             print(f"ERRO ao iniciar aria2c: {e}")

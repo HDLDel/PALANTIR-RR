@@ -53,13 +53,8 @@ class NetworkUtils:
                         aria2c_path = candidate
                         break
             else:
-                # Linux: procura aria2c (sem .exe)
-                for candidate in [
-                    os.path.join(base_dir, 'aria2c'),
-                ]:
-                    if os.path.exists(candidate):
-                        aria2c_path = candidate
-                        break
+                # Linux: ignora o executável da pasta, usa sempre o do PATH
+                aria2c_path = 'aria2c'
 
             if not aria2c_path:
                 aria2c_path = 'aria2c'  # Fallback para PATH do sistema
