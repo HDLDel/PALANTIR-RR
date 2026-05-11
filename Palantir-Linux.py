@@ -353,19 +353,25 @@ class Palantir:
     def start_aria2c(self):
         """Inicia o servidor aria2c"""
         try:
+            # Tenta encerrar instâncias anteriores do aria2c que possam estar travando a porta
+            subprocess.run(['pkill', '-x', 'aria2c'],
+                         stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL)
+            time.sleep(0.5)
+
             aria2c_path = 'aria2c'
             print(f"Tentando aria2c do PATH: {aria2c_path}")
-            process = subprocess.Popen(
+            self.aria2c_process = subprocess.Popen(
                 [aria2c_path, "--enable-rpc", "--rpc-listen-all=true", "--rpc-allow-origin-all", "--daemon=false"],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 start_new_session=True
             )
-            time.sleep(3)
-            if process.poll() is None:
-                print(f"aria2c do PATH iniciado com PID: {process.pid}")
+            time.sleep(2)
+            if self.aria2c_process.poll() is None:
+                print(f"aria2c do PATH iniciado com PID: {self.aria2c_process.pid}")
             else:
-                raise FileNotFoundError(f"aria2c do PATH falhou ao iniciar (PID {process.poll()})")
+                print(f"Aviso: aria2c falhou ao iniciar (código {self.aria2c_process.poll()}). Assumindo que já existe uma instância rodando.")
 
             print(f"Usando aria2c: {aria2c_path}")
 
@@ -3524,10 +3530,20 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
     def __del__(self):
         """Limpa os processos ao fechar o programa"""
         try:
-            # Mata o processo do aria2c (Linux)
-            subprocess.run(['pkill', 'aria2c'],
-                         stdout=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL)
+            # Encerra o processo do aria2c iniciado pelo programa
+            if hasattr(self, 'aria2c_process') and self.aria2c_process:
+                if self.aria2c_process.poll() is None:  # Se ainda está rodando
+                    self.aria2c_process.terminate()
+                    try:
+                        self.aria2c_process.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        self.aria2c_process.kill()
+                    print("aria2c encerrado corretamente")
+            else:
+                # Mata o processo do aria2c se não tivermos a referência (segurança)
+                subprocess.run(['pkill', 'aria2c'],
+                             stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL)
 
             # Termina o processo MPV se estiver rodando
             if self.mpv_process and self.mpv_process.poll() is None:
