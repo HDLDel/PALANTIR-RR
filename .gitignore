@@ -279,3 +279,4 @@ xcuserdata/
 # Package managers
 packages/
 Package Cache/
+dist/
