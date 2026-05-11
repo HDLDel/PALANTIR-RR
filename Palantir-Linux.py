@@ -720,9 +720,8 @@ class Palantir:
                             if os.path.exists(file_path):
                                 final_size = os.path.getsize(file_path)
                                 self._db_execute_jobs("UPDATE download_jobs SET remote_size = ? WHERE name = ?", (final_size, name))
-                                add_log = None
                                 print(f"Tamanho final detectado localmente para '{name}': {final_size} bytes")
-                    except Exception as _:
+                    except Exception:
                         pass
 
                     # Verifica de fato se o arquivo final existe e tem tamanho esperado antes de remover do DB
@@ -3722,30 +3721,12 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
         com o nome sanitizado fornecido.
         """
         sanitized_name_to_find = self.sanitize_directory_name(name_to_find)
-        print(f"[DEBUG] Buscando arquivo: '{sanitized_name_to_find}' em: {base_path}")
-        
-        # Verifica se o caminho base existe
-        if not os.path.exists(base_path):
-            print(f"[DEBUG] Caminho base não existe: {base_path}")
-            return None
-            
-        try:
-            for root, dirs, files in os.walk(base_path):
-                for file in files:
-                    # Compara o início do nome do arquivo (sem extensão) com o nome sanitizado
-                    file_name_without_ext, _ = os.path.splitext(file)
-                    sanitized_file_name = self.sanitize_directory_name(file_name_without_ext)
-                    
-                    if sanitized_file_name.startswith(sanitized_name_to_find):
-                        full_path = os.path.join(root, file)
-                        print(f"[DEBUG] Arquivo encontrado: {full_path}")
-                        return full_path
-        except PermissionError as e:
-            print(f"[DEBUG] Erro de permissão ao acessar diretório: {e}")
-        except Exception as e:
-            print(f"[DEBUG] Erro na busca: {e}")
-        
-        print(f"[DEBUG] Arquivo não encontrado: {sanitized_name_to_find}")
+        for root, dirs, files in os.walk(base_path):
+            for file in files:
+                # Compara o início do nome do arquivo (sem extensão) com o nome sanitizado
+                file_name_without_ext, _ = os.path.splitext(file)
+                if self.sanitize_directory_name(file_name_without_ext).startswith(sanitized_name_to_find):
+                    return os.path.join(root, file)
         return None
         
     def verificar_e_retomar_pendentes(self):
@@ -3810,12 +3791,6 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
 
                     add_log(f"Encontrados {len(pending_jobs)} trabalhos pendentes. Verificando arquivos...")
                     base_download_path = self.download_path.get()
-                    
-                    # Log de debug para WSL2
-                    print(f"[DEBUG] Caminho de download: {base_download_path}")
-                    print(f"[DEBUG] Caminho existe: {os.path.exists(base_download_path)}")
-                    if os.path.exists(base_download_path):
-                        print(f"[DEBUG] Conteúdo do diretório: {os.listdir(base_download_path)[:5]}...")
 
                     to_re_add = []
                     jobs_to_remove = []
@@ -3845,16 +3820,6 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
                                 to_re_add.append((name, url, base_download_path))
                         except Exception as e:
                             add_log(f"ERRO ao verificar o trabalho '{name}': {e}")
-
-                    # Remover trabalhos concluídos do DB
-                    if jobs_to_remove:
-                        local_conn = sqlite3.connect('downloads.db')
-                        local_cursor = local_conn.cursor()
-                        for job_name in jobs_to_remove:
-                            local_cursor.execute("DELETE FROM download_jobs WHERE name = ?", (job_name,))
-                        local_conn.commit()
-                        local_conn.close()
-                        add_log(f"\n{len(jobs_to_remove)} trabalhos concluídos foram removidos do banco.")
 
                     # Re-enfileirar trabalhos pendentes (respeitando o limite de estagnação)
                     requeued_count = 0
@@ -3933,6 +3898,9 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
     def download_selected_v3(self):
         """Inicia o Download 3 para os itens selecionados (modo urllib)."""
         try:
+            # Reseta o controle de estagnação para começar como se fosse a primeira vez
+            self.reset_stagnation_control()
+            
             selected_items = self.tree.selection()
             if not selected_items:
                 messagebox.showwarning("Aviso", "Por favor, selecione um vídeo para download.")
