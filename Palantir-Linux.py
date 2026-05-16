@@ -161,7 +161,7 @@ class Palantir:
             self.root.set_theme(self.active_theme)
         except Exception as e:
             print(f"Erro ao aplicar o tema {self.active_theme}: {e}")
-        self.root.title("Palantir Versão V3.5.39")
+        self.root.title("Palantir Versão V3.5.40")
         # Maximiza de forma cross-platform
         if platform.system() == "Windows":
             self.root.state('zoomed')
