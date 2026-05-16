@@ -224,7 +224,7 @@ class Palantir:
             # Método 4: Atualiza AppUserModelID (importante para barra de tarefas)
             try:
                 import ctypes
-                myappid = 'palantir.app.V3.5.39'
+                myappid = 'palantir.app.V3.5.40'
                 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
                 
                 # Define o ícone do AppUserModelID
@@ -288,6 +288,7 @@ class Palantir:
         self.dns_server_str = ""
         self.active_theme = "black"
         self.tmdb_api_key_str = ""  # Chave padrão
+        self.m3u_base_url_str = "DIGITE AQUI SUA URL"
         self.config_file = os.path.join(get_base_dir(), "config.json")
 
         # 2. Carregar configurações do arquivo, sobrescrevendo os padrões
@@ -317,7 +318,7 @@ class Palantir:
             self.root.set_theme(self.active_theme)
         except Exception as e:
             print(f"Erro ao aplicar o tema {self.active_theme}: {e}")
-        self.root.title("Palantir Versão V3.5.39")
+        self.root.title("Palantir Versão V3.5.40")
         # Maximiza de forma cross-platform
         if platform.system() == "Windows":
             self.root.state('zoomed')
@@ -334,6 +335,7 @@ class Palantir:
         self.user_agent = tk.StringVar(self.root, value=self.user_agent_str)
         self.dns_server = tk.StringVar(self.root, value=self.dns_server_str)
         self.tmdb_api_key = tk.StringVar(self.root, value=self.tmdb_api_key_str)
+        self.m3u_base_url = tk.StringVar(self.root, value=self.m3u_base_url_str)
         self.download_progress = tk.DoubleVar(self.root)
         self.download_progress.set(0.0)
 
@@ -565,6 +567,7 @@ class Palantir:
             self.dns_server_str = config.get('dns_server', self.dns_server_str)
             self.active_theme = config.get('theme', self.active_theme)
             self.tmdb_api_key_str = config.get('tmdb_api_key', self.tmdb_api_key_str)
+            self.m3u_base_url_str = config.get('m3u_base_url', self.m3u_base_url_str)
         except Exception as e:
             print(f"Erro ao carregar configurações: {e}")
             # Mantém os padrões definidos no __init__ em caso de erro
@@ -585,6 +588,8 @@ class Palantir:
             config['dns_server'] = self.dns_server.get()
             config['theme'] = self.active_theme
             config['tmdb_api_key'] = self.tmdb_api_key.get()
+            if hasattr(self, 'm3u_base_url'):
+                config['m3u_base_url'] = self.m3u_base_url.get()
 
             # Garante que o diretório existe
             os.makedirs(os.path.dirname(self.config_file), exist_ok=True)
@@ -1855,6 +1860,16 @@ class Palantir:
             width=40
         )
         self.btn_change_api_key.pack(side=tk.LEFT, padx=5)
+
+        self.btn_change_url = ctk.CTkButton(
+            self.list_buttons_frame,
+            text="URL",
+            command=self.change_m3u_base_url,
+            fg_color=CORES_BOTOES['ABRIR'],  # Azul
+            hover_color=CORES_BOTOES['ABRIR_HOVER'],  # Azul escuro para hover
+            width=40
+        )
+        self.btn_change_url.pack(side=tk.LEFT, padx=5)
 
         # Separador final
         ttk.Separator(self.list_buttons_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, padx=5, fill=tk.Y)

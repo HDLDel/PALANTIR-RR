@@ -116,7 +116,7 @@ def validar_url(url):
 def get_base_dir():
     """Obtém o diretório base, funcionando tanto para script quanto para executável PyInstaller"""
     if getattr(sys, 'frozen', False):
-        # Modo executável compilado
+        # Modo executável V3.5.40
         return os.path.dirname(sys.executable)
     else:
         # Modo script normal
@@ -132,6 +132,7 @@ class Palantir:
         self.dns_server_str = ""
         self.active_theme = "black"
         self.tmdb_api_key_str = ""  # Chave padrão
+        self.m3u_base_url_str = "DIGITE AQUI SUA URL"
         self.config_file = os.path.join(get_base_dir(), "config.json")
 
         # 2. Carregar configurações do arquivo, sobrescrevendo os padrões
@@ -177,6 +178,7 @@ class Palantir:
         self.user_agent = tk.StringVar(self.root, value=self.user_agent_str)
         self.dns_server = tk.StringVar(self.root, value=self.dns_server_str)
         self.tmdb_api_key = tk.StringVar(self.root, value=self.tmdb_api_key_str)
+        self.m3u_base_url = tk.StringVar(self.root, value=self.m3u_base_url_str)
         self.download_progress = tk.DoubleVar(self.root)
         self.download_progress.set(0.0)
 
@@ -188,7 +190,7 @@ class Palantir:
         self.reserva_mode = False
         self.player_type = "MPV (Sistema)" # MPV (Sistema) é o player padrão agora
         # Caminhos dos players (Linux - sem .exe)
-        # Usa get_base_dir() para funcionar tanto no script quanto no executável compilado
+        # Usa get_base_dir() para funcionar tanto no script quanto no executável V3.5.40
         base = get_base_dir()
 
         # Linux: MPV do PATH do sistema, AppImages da pasta Players
@@ -350,6 +352,17 @@ class Palantir:
             messagebox.showwarning("Aviso", "Nenhuma chave inserida.")
             return False
 
+    def change_m3u_base_url(self):
+        """Abre um diálogo para o usuário inserir uma nova URL base do M3U."""
+        dialog = ctk.CTkInputDialog(text="Digite a URL base do M3U:", title="URL Base")
+        new_url = dialog.get_input()
+        if new_url is not None and new_url.strip():
+            self.m3u_base_url.set(new_url.strip())
+            self.save_config()
+            messagebox.showinfo("Sucesso", "URL base atualizada com sucesso.")
+        elif new_url is not None:
+            messagebox.showwarning("Aviso", "Nenhuma URL inserida.")
+
     def start_aria2c(self):
         """Inicia o servidor aria2c"""
         try:
@@ -406,6 +419,7 @@ class Palantir:
             self.dns_server_str = config.get('dns_server', self.dns_server_str)
             self.active_theme = config.get('theme', self.active_theme)
             self.tmdb_api_key_str = config.get('tmdb_api_key', self.tmdb_api_key_str)
+            self.m3u_base_url_str = config.get('m3u_base_url', self.m3u_base_url_str)
         except Exception as e:
             print(f"Erro ao carregar configurações: {e}")
             # Mantém os padrões definidos no __init__ em caso de erro
@@ -426,6 +440,8 @@ class Palantir:
             config['dns_server'] = self.dns_server.get()
             config['theme'] = self.active_theme
             config['tmdb_api_key'] = self.tmdb_api_key.get()
+            if hasattr(self, 'm3u_base_url'):
+                config['m3u_base_url'] = self.m3u_base_url.get()
 
             # Garante que o diretório existe
             os.makedirs(os.path.dirname(self.config_file), exist_ok=True)
@@ -1696,6 +1712,16 @@ class Palantir:
             width=40
         )
         self.btn_change_api_key.pack(side=tk.LEFT, padx=5)
+
+        self.btn_change_url = ctk.CTkButton(
+            self.list_buttons_frame,
+            text="URL",
+            command=self.change_m3u_base_url,
+            fg_color=CORES_BOTOES['ABRIR'],  # Azul
+            hover_color=CORES_BOTOES['ABRIR_HOVER'],  # Azul escuro para hover
+            width=40
+        )
+        self.btn_change_url.pack(side=tk.LEFT, padx=5)
 
         # Separador final
         ttk.Separator(self.list_buttons_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, padx=5, fill=tk.Y)
