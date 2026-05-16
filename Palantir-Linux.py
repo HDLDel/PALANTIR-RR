@@ -114,8 +114,7 @@ def validar_url(url):
 
 
 def get_base_dir():
-    """Obtém o diretório base, funcionando tanto para ls
-     quanto para executável PyInstaller"""
+    """Obtém o diretório base, funcionando tanto para script quanto para executável PyInstaller"""
     if getattr(sys, 'frozen', False):
         # Modo executável compilado
         return os.path.dirname(sys.executable)
