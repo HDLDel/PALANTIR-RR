@@ -132,7 +132,7 @@ class Palantir:
         self.dns_server_str = ""
         self.active_theme = "black"
         self.tmdb_api_key_str = ""  # Chave padrão
-        self.config_file = "config.json"
+        self.config_file = os.path.join(get_base_dir(), "config.json")
 
         # 2. Carregar configurações do arquivo, sobrescrevendo os padrões
         self.load_config()
@@ -390,11 +390,8 @@ class Palantir:
         """Carrega as configurações do arquivo para atributos Python simples."""
         try:
             config = {}
-            # Usa os.path.join para criar caminhos compatíveis com o sistema operacional
-            config_path = os.path.join(os.path.expanduser('~'), '.config', 'palantir', 'config.json')
-            
-            if os.path.exists(config_path):
-                with open(config_path, 'r') as f:
+            if os.path.exists(self.config_file):
+                with open(self.config_file, 'r', encoding='utf-8') as f:
                     config = json.load(f)
             # Atualiza os atributos _str e active_theme
             self.download_path_str = config.get('default_download_path', self.download_path_str)
@@ -409,22 +406,25 @@ class Palantir:
     def save_config(self):
         """Salva as configurações no arquivo"""
         try:
-            config = {
-                'default_download_path': self.download_path.get(),
-                'user_agent': self.user_agent.get(),
-                'dns_server': self.dns_server.get(),
-                'theme': self.active_theme,
-                'tmdb_api_key': self.tmdb_api_key.get()
-            }
-            
-            # Usa os.path.join para criar caminhos compatíveis com o sistema operacional
-            config_path = os.path.join(os.path.expanduser('~'), '.config', 'palantir', 'config.json')
-            
+            config = {}
+            if os.path.exists(self.config_file):
+                try:
+                    with open(self.config_file, 'r', encoding='utf-8') as f:
+                        config = json.load(f)
+                except:
+                    pass
+
+            config['default_download_path'] = self.download_path.get()
+            config['user_agent'] = self.user_agent.get()
+            config['dns_server'] = self.dns_server.get()
+            config['theme'] = self.active_theme
+            config['tmdb_api_key'] = self.tmdb_api_key.get()
+
             # Garante que o diretório existe
-            os.makedirs(os.path.dirname(config_path), exist_ok=True)
-            
-            with open(config_path, 'w') as f:
-                json.dump(config, f)
+            os.makedirs(os.path.dirname(self.config_file), exist_ok=True)
+
+            with open(self.config_file, 'w', encoding='utf-8') as f:
+                json.dump(config, f, indent=4)
                 
         except Exception as e:
             print(f"Erro ao salvar configurações: {e}")
