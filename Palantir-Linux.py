@@ -3309,10 +3309,10 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
             try:
                 with open(self.config_file, 'r', encoding='utf-8') as f:
                     config = json.load(f)
-                base_url = config.get('m3u_base_url', 'http://xtyre.top').rstrip('/')
+                base_url = config.get('m3u_base_url', 'DIGITE AQUI SUA URL').rstrip('/')
             except Exception as e:
                 print(f"Aviso: Não foi possível ler m3u_base_url do config.json, usando padrão: {e}")
-                base_url = 'http://xtyre.top'
+                base_url = 'DIGITE AQUI SUA URL'
 
             # Obter a pasta de download configurada
             pasta_base = self.download_path.get()
@@ -3460,7 +3460,7 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
                         poster_url = buscar_poster_tmdb(nome_video, tipo_conteudo)
 
                         # Construir URL completa com forward slashes
-                        # URL: http://xtyre.top/FILMES/Acao/filme.mp4 ou http://xtyre.top/SERIES/Drama/serie.mp4
+                        # URL: DIGITE AQUI SUA URL/FILMES/Acao/filme.mp4 ou DIGITE AQUI SUA URL/SERIES/Drama/serie.mp4
                         url_completa = f"{base_url}/{tipo_conteudo}/{arquivo_video.replace(os.sep, '/')}"
 
                         # Gerar entrada M3U
