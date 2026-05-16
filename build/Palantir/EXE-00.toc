@@ -60,7 +60,7 @@
  [],
  False,
  False,
- 1778538006,
+ 1778891771,
  [('run',
    '/home/del/.local/lib/python3.14/site-packages/PyInstaller/bootloader/Linux-64bit-intel/run',
    'EXECUTABLE')],

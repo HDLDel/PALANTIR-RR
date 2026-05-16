@@ -79,7 +79,7 @@ AppDir/
 *.AppImage
 *.tar.gz
 publish/
-
+build/
 # -------------------------------------------
 # Arquivos Temporários do Sistema
 # -------------------------------------------

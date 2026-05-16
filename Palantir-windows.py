@@ -550,8 +550,15 @@ class Palantir:
         try:
             config = {}
             if os.path.exists(self.config_file):
-                with open(self.config_file, 'r', encoding='utf-8') as f:
-                    config = json.load(f)
+                try:
+                    with open(self.config_file, 'r', encoding='utf-8') as f:
+                        config = json.load(f)
+                except json.JSONDecodeError:
+                    # Fallback caso o usuário tenha inserido caminhos do Windows com barras simples
+                    with open(self.config_file, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    content = content.replace('\\', '\\\\').replace('\\\\"', '\\"')
+                    config = json.loads(content)
             # Atualiza os atributos _str e active_theme
             self.download_path_str = config.get('default_download_path', self.download_path_str)
             self.user_agent_str = config.get('user_agent', self.user_agent_str)
@@ -3455,8 +3462,14 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
         try:
             # Carregar URL base do config.json
             try:
-                with open(self.config_file, 'r', encoding='utf-8') as f:
-                    config = json.load(f)
+                try:
+                    with open(self.config_file, 'r', encoding='utf-8') as f:
+                        config = json.load(f)
+                except json.JSONDecodeError:
+                    with open(self.config_file, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    content = content.replace('\\', '\\\\').replace('\\\\"', '\\"')
+                    config = json.loads(content)
                 base_url = config.get('m3u_base_url', 'DIGITE AQUI SUA URL').rstrip('/')
             except Exception as e:
                 print(f"Aviso: Não foi possível ler m3u_base_url do config.json, usando padrão: {e}")
