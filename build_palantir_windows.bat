@@ -43,7 +43,7 @@ echo.
 echo [INFO] Usando build_windows.py (build automatico)
 echo.
 
-python "%PROJECT_DIR%\Compile\build_windows.py"
+python "%PROJECT_DIR%\build_windows.py"
 
 if %errorlevel% neq 0 (
     echo.
