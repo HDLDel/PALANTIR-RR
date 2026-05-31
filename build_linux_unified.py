@@ -17,9 +17,12 @@ from typing import Optional, List, Tuple
 # CONFIGURAÇÕES GERAIS
 # =============================================================================
 
-# Usa a pasta raiz do projeto (pai da pasta Compile)
+# Usa a pasta raiz do projeto (Inteligente)
 SCRIPT_DIR = Path(__file__).parent.absolute()
-PROJECT_DIR = SCRIPT_DIR.parent  # Pasta raiz do projeto
+if (SCRIPT_DIR / "Palantir-windows.py").exists() or (SCRIPT_DIR / "Palantir-Linux.py").exists():
+    PROJECT_DIR = SCRIPT_DIR
+else:
+    PROJECT_DIR = SCRIPT_DIR.parent  # Pasta raiz do projeto
 PLAYERS_DIR = PROJECT_DIR / "Players"
 DIST_DIR = PROJECT_DIR / "dist"
 APPDIR_DIR = PROJECT_DIR / "AppDir"

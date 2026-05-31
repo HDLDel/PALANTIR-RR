@@ -4,11 +4,15 @@ setlocal EnableDelayedExpansion
 REM Muda para o diretorio do script
 cd /d "%~dp0"
 
-REM Navega para a pasta raiz do projeto (pai da pasta Compile)
-cd ..
-
-REM Salva o caminho da raiz do projeto
-set PROJECT_DIR=%CD%
+REM Detecta se ja esta na pasta raiz do projeto
+if exist "Palantir-windows.py" (
+    set PROJECT_DIR=%CD%
+) else if exist "Palantir-Linux.py" (
+    set PROJECT_DIR=%CD%
+) else (
+    cd ..
+    set PROJECT_DIR=%CD%
+)
 
 echo ============================================================
 echo          INSTALADOR DE DEPENDENCIAS - PALANTIR
@@ -53,10 +57,10 @@ if %errorlevel% neq 0 (
 echo.
 
 :: Instala as dependencias do requirements.txt
-if exist "%PROJECT_DIR%\Compile\requirements.txt" (
+if exist "%PROJECT_DIR%\requirements.txt" (
     echo [INFO] Instalando dependencias do requirements.txt...
     echo.
-    python -m pip install -r "%PROJECT_DIR%\Compile\requirements.txt"
+    python -m pip install -r "%PROJECT_DIR%\requirements.txt"
     if %errorlevel% neq 0 (
         echo.
         echo [ERRO] Falha ao instalar algumas dependencias!

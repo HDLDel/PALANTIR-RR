@@ -11,10 +11,17 @@ import subprocess
 import shutil
 from pathlib import Path
 
+# =============================================================================
+# CONFIGURAÇÕES DE DIRETÓRIO (Inteligente)
+# =============================================================================
+SCRIPT_DIR = Path(__file__).parent.absolute()
+if (SCRIPT_DIR / "Palantir-windows.py").exists() or (SCRIPT_DIR / "Palantir-Linux.py").exists():
+    PROJECT_DIR = SCRIPT_DIR
+else:
+    PROJECT_DIR = SCRIPT_DIR.parent
+
 def main():
-    # Usa a pasta raiz do projeto (pai da pasta Compile)
-    script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
+    project_dir = PROJECT_DIR
     os.chdir(project_dir)
 
     print("=" * 60)

@@ -11,6 +11,15 @@ import shutil
 import time
 from pathlib import Path
 
+# =============================================================================
+# CONFIGURAÇÕES DE DIRETÓRIO (Inteligente)
+# =============================================================================
+SCRIPT_DIR = Path(__file__).parent.absolute()
+if (SCRIPT_DIR / "Palantir-windows.py").exists() or (SCRIPT_DIR / "Palantir-Linux.py").exists():
+    PROJECT_DIR = SCRIPT_DIR
+else:
+    PROJECT_DIR = SCRIPT_DIR.parent
+
 # Cores para output no console
 class Colors:
     HEADER = '\033[95m'
@@ -86,9 +95,7 @@ def check_executables():
     """Verifica se os executáveis necessários estão presentes"""
     print_header("Verificando Executáveis")
 
-    # Usa a pasta raiz do projeto (pai da pasta Compile)
-    script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
+    project_dir = PROJECT_DIR
 
     executables = {
         "aria2c.exe": project_dir / "aria2c.exe",
@@ -116,9 +123,7 @@ def create_onefolder_build():
     """Cria build no formato onefolder (pasta com todos os arquivos)"""
     print_header("Criando Build OneFolder (Recomendado)")
 
-    # Usa a pasta raiz do projeto (pai da pasta Compile)
-    script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
+    project_dir = PROJECT_DIR
     dist_dir = project_dir / "dist" / "Palantir"
 
     # Limpeza prévia: remove dist/Palantir se existir
@@ -207,8 +212,7 @@ def create_onefile_build():
     """Cria build no formato onefile (único executável)"""
     print_header("Criando Build OneFile (Executável Único)")
 
-    script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
+    project_dir = PROJECT_DIR
 
     cmd = [
         sys.executable, "-m", "PyInstaller",
@@ -257,8 +261,7 @@ def create_distribution_folder():
     """Cria uma pasta de distribuição completa com Players/ e aria2c.exe"""
     print_header("Criando Pasta de Distribuição")
 
-    script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
+    project_dir = PROJECT_DIR
     dist_dir = project_dir / "dist" / "Palantir"
     publish_dir = project_dir / "publish"
 
@@ -292,8 +295,7 @@ def cleanup():
     """Limpa arquivos temporários de build"""
     print_header("Limpando Arquivos Temporários")
 
-    script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
+    project_dir = PROJECT_DIR
 
     folders_to_remove = ["build", "__pycache__"]
 
@@ -319,8 +321,7 @@ def main():
     print_header("Palantir Windows Build Tool")
     print_info("Este script irá compilar o Palantir com todas as dependências")
 
-    script_dir = Path(__file__).parent.absolute()
-    project_dir = script_dir.parent
+    project_dir = PROJECT_DIR
     os.chdir(project_dir)
 
     print("\n" + "="*60)

@@ -5,11 +5,15 @@ cls
 REM Muda para o diretorio do script
 cd /d "%~dp0"
 
-REM Navega para a pasta raiz do projeto (pai da pasta Compile)
-cd ..
-
-REM Salva o caminho da raiz do projeto
-set PROJECT_DIR=%CD%
+REM Detecta se ja esta na pasta raiz do projeto
+if exist "Palantir-windows.py" (
+    set PROJECT_DIR=%CD%
+) else if exist "Palantir-Linux.py" (
+    set PROJECT_DIR=%CD%
+) else (
+    cd ..
+    set PROJECT_DIR=%CD%
+)
 
 echo ============================================================
 echo          Palantir Windows Build Tool
