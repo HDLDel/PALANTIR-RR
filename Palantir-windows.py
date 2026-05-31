@@ -517,6 +517,17 @@ class Palantir:
             messagebox.showwarning("Aviso", "Nenhuma chave inserida.")
             return False
 
+    def change_m3u_base_url(self):
+        """Abre um diálogo para o usuário inserir uma nova URL base do M3U."""
+        dialog = ctk.CTkInputDialog(text="Digite a URL base do M3U:", title="URL Base")
+        new_url = dialog.get_input()
+        if new_url is not None and new_url.strip():
+            self.m3u_base_url.set(new_url.strip())
+            self.save_config()
+            messagebox.showinfo("Sucesso", "URL base atualizada com sucesso.")
+        elif new_url is not None:
+            messagebox.showwarning("Aviso", "Nenhuma URL inserida.")
+
     def start_aria2c(self):
         """Inicia o servidor aria2c"""
         try:
