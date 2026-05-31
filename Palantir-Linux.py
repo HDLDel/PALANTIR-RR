@@ -406,13 +406,13 @@ class Palantir:
             if os.path.exists(self.config_file):
                 try:
                     with open(self.config_file, 'r', encoding='utf-8') as f:
-                        config = json.load(f)
+                        config = json.load(f, strict=False)
                 except json.JSONDecodeError:
                     # Fallback caso o usuário tenha inserido caminhos do Windows com barras simples
                     with open(self.config_file, 'r', encoding='utf-8') as f:
                         content = f.read()
                     content = content.replace('\\', '\\\\').replace('\\\\"', '\\"')
-                    config = json.loads(content)
+                    config = json.loads(content, strict=False)
             # Atualiza os atributos _str e active_theme
             self.download_path_str = config.get('default_download_path', self.download_path_str)
             self.user_agent_str = config.get('user_agent', self.user_agent_str)
@@ -431,7 +431,7 @@ class Palantir:
             if os.path.exists(self.config_file):
                 try:
                     with open(self.config_file, 'r', encoding='utf-8') as f:
-                        config = json.load(f)
+                        config = json.load(f, strict=False)
                 except:
                     pass
 
