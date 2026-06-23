@@ -2289,38 +2289,42 @@ class Palantir:
             
             # Função para adicionar texto ao terminal
             def append_to_terminal(text, color='white'):
-                try:
-                    if multi_url_window.winfo_exists() and terminal.winfo_exists():
-                        terminal.config(state='normal')
-                        terminal.tag_configure(color, foreground=color)
-                        terminal.insert(tk.END, f"{text}\n", color)
-                        terminal.see(tk.END)
-                        terminal.config(state='disabled')
-                        terminal.update_idletasks()
-                except Exception as e:
-                    print(f"Erro ao atualizar terminal: {str(e)}")
+                def _update():
+                    try:
+                        if multi_url_window.winfo_exists() and terminal.winfo_exists():
+                            terminal.config(state='normal')
+                            terminal.tag_configure(color, foreground=color)
+                            terminal.insert(tk.END, f"{text}\n", color)
+                            terminal.see(tk.END)
+                            terminal.config(state='disabled')
+                            terminal.update_idletasks()
+                    except Exception as e:
+                        print(f"Erro ao atualizar terminal: {str(e)}")
+                self.root.after(0, _update)
 
             # Variável para controlar o cancelamento
             cancel_process = False
             
             # Função para atualizar a interface de forma segura
             def safe_update_interface(text, progress=None):
-                try:
-                    if multi_url_window.winfo_exists():
-                        if text:
-                            status_label.config(text=text)
-                            append_to_terminal(text)
-                        if progress is not None:
-                            # Garante que progress é float para formatação
-                            try:
-                                progress_float = float(progress)
-                            except Exception:
-                                progress_float = 0.0
-                            progress_var.set(progress_float)
-                            progress_label.config(text=f"{progress_float:.1f}%")
-                        multi_url_window.update_idletasks()
-                except Exception as e:
-                    print(f"Erro ao atualizar interface: {str(e)}")
+                def _update():
+                    try:
+                        if multi_url_window.winfo_exists():
+                            if text:
+                                status_label.config(text=text)
+                                append_to_terminal(text)
+                            if progress is not None:
+                                # Garante que progress é float para formatação
+                                try:
+                                    progress_float = float(progress)
+                                except Exception:
+                                    progress_float = 0.0
+                                progress_var.set(progress_float)
+                                progress_label.config(text=f"{progress_float:.1f}%")
+                            multi_url_window.update_idletasks()
+                    except Exception as e:
+                        print(f"Erro ao atualizar interface: {str(e)}")
+                self.root.after(0, _update)
             
             # Função para processar os links
             def process_links():
