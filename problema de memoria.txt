@@ -1,0 +1,31 @@
+analize os comits eu to sentido a pesquisa extremamente demorada antes era quase instantanea agora demora quase um minuto e tambem o sistema identificava coleção e coleçao como um so e agora nao mais, identifique quando esses buigs foram inseridos
+21:53
+Com base na análise do histórico de commits e da estrutura atual do código, identificamos o diagnóstico dos dois problemas citados e quando eles foram introduzidos.
+
+1. Diagnóstico do Problema
+A. Por que a pesquisa ficou extremamente demorada (e quando começou)?
+Como era: Originalmente, o projeto possuía um arquivo separado chamado search_engine.py (adicionado no commit 136377d). Esse arquivo implementava uma indexação em memória via dicionários Python (self.busca_nome, etc.), que realizava buscas instantâneas. No entanto, essa classe nunca chegou a ser importada ou integrada nos arquivos principais de execução (
+
+Palantir-Linux.py
+ e 
+
+Palantir-windows.py
+).
+O que mudou: A busca nos arquivos principais sempre foi feita via consulta SQL direta com LIKE '%termo%' na tabela videos (desde o commit inicial 2ba1869). Conforme a quantidade de vídeos no seu banco de dados local cresceu para dezenas ou centenas de milhares, o SQLite passou a realizar um Full Table Scan (varredura completa no disco) a cada caractere pesquisado, sem utilizar índices (pois o LIKE com % no início anula os índices tradicionais). Além disso, a conexão da busca em thread não herdava os PRAGMAs de cache otimizados do banco principal.
+Inserção do Bug: No commit ac33bb0 ("chore: remove obsolete and unused python scripts"), o search_engine.py e os módulos antigos foram apagados por estarem obsoletos, consolidando a busca diretamente no banco de dados sem as otimizações necessárias de cache e colunas apropriadas.
+B. Por que "coleção" e "coleçao" não são mais identificados como o mesmo termo?
+O SQLite por padrão não é accent-insensitive (insensível a acentuações) em consultas LIKE para caracteres Unicode (não-ASCII) como ç, ã, etc.
+No código atual, existe a função normalize_text para remover acentos e caracteres especiais, mas ela só era usada para alimentar índices em memória que nunca são consultados, enquanto a busca no banco continuava consultando a coluna original name com acentuação. Portanto, buscar coleção e coleçao gera resultados estritamente diferentes no banco de dados SQLite.
+2. Plano de Solução Proposto
+Para tornar a busca instantânea (menos de 10ms) e insensível a acentos/maiusculas, faremos o seguinte:
+
+Migração Automática do Banco (em init_database):
+Adicionar colunas normalized_name e normalized_category na tabela videos se não existirem (ALTER TABLE).
+Criar índices de performance nessas colunas: idx_videos_normalized_name e idx_videos_normalized_category.
+Na primeira execução, rodar uma migração automática para preencher essas colunas com os nomes normalizados (usando self.normalize_text) nos registros existentes.
+Atualização na Inserção de Dados:
+Modificar a inserção em lote (process_links) para calcular e salvar as strings normalizadas na tabela.
+Modificar inserir_no_banco e atualizar_no_banco para manter essas colunas sincronizadas.
+Otimização da Consulta (filtrar_resultados):
+Alterar a busca no SQLite para filtrar por normalized_name LIKE ? e normalized_category LIKE ?.
+Normalizar o termo que o usuário digita na busca antes de submetê-lo ao banco de dados.

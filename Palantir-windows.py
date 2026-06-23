@@ -2249,17 +2249,23 @@ class Palantir:
                 # Cria uma conexão de banco de dados local para esta thread
                 local_conn = sqlite3.connect('videos.db')
                 local_cursor = local_conn.cursor()
+                
+                # Configurações otimizadas para velocidade na busca
+                local_cursor.execute("PRAGMA synchronous = OFF")
+                local_cursor.execute("PRAGMA journal_mode = MEMORY")
+                local_cursor.execute("PRAGMA cache_size = -10000")  # 10MB cache local
+                local_cursor.execute("PRAGMA temp_store = MEMORY")
 
                 query = "SELECT id, name, type, season, username, category, url FROM videos WHERE 1=1"
                 params = []
 
                 if termo_busca:
-                    query += " AND name LIKE ?"
-                    params.append(f"%{termo_busca}%")
+                    query += " AND normalized_name LIKE ?"
+                    params.append(f"%{self.normalize_text(termo_busca)}%")
 
                 if categoria_busca:
-                    query += " AND category LIKE ?"
-                    params.append(f"%{categoria_busca}%")
+                    query += " AND normalized_category LIKE ?"
+                    params.append(f"%{self.normalize_text(categoria_busca)}%")
 
                 if tipo_busca:  # Só aplica o filtro se não for "Todos" (quando tipo_busca não é None)
                     query += " AND type LIKE ?"
@@ -2267,8 +2273,8 @@ class Palantir:
 
                 if extra_busca:
                     # Adiciona condição para busca adicional em nome, categoria e tipo
-                    query += " AND (name LIKE ? OR category LIKE ? OR type LIKE ?)"
-                    params.extend([f"%{extra_busca}%", f"%{extra_busca}%", f"%{extra_busca}%"])
+                    query += " AND (normalized_name LIKE ? OR normalized_category LIKE ? OR type LIKE ?)"
+                    params.extend([f"%{self.normalize_text(extra_busca)}%", f"%{self.normalize_text(extra_busca)}%", f"%{extra_busca}%"])
 
                 query += " ORDER BY name LIMIT 5000"  # Limita para evitar sobrecarga na UI
 
@@ -2605,8 +2611,8 @@ class Palantir:
 
                     # Prepara a query de inserção em lote
                     insert_query = '''
-                        INSERT OR IGNORE INTO videos (name, url, type, season, username, category)
-                        VALUES (?, ?, ?, ?, ?, ?)
+                        INSERT OR IGNORE INTO videos (name, url, type, season, username, category, normalized_name, normalized_category)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                     '''
 
                     # Lista para armazenar os dados em lote
@@ -2684,7 +2690,9 @@ class Palantir:
                                             season = match.group(2)
 
                                         total_processed += 1
-                                        batch_data.append((name, url_video, content_type, season, m3u_url, category))
+                                        name_norm = self.normalize_text(name)
+                                        category_norm = self.normalize_text(category) if category else ""
+                                        batch_data.append((name, url_video, content_type, season, m3u_url, category, name_norm, category_norm))
 
                                         # Quando o lote atinge o tamanho definido, insere no banco
                                         if len(batch_data) >= batch_size:
@@ -2822,18 +2830,44 @@ class Palantir:
                     season TEXT NOT NULL,
                     username TEXT,
                     category TEXT,
-                    downloaded INTEGER DEFAULT 0
+                    downloaded INTEGER DEFAULT 0,
+                    normalized_name TEXT,
+                    normalized_category TEXT
                 )
             """)
+            
+            # Verifica e adiciona colunas de normalização se não existirem (para bancos legados)
+            try:
+                self.cursor.execute("ALTER TABLE videos ADD COLUMN normalized_name TEXT;")
+            except sqlite3.OperationalError:
+                pass
+            try:
+                self.cursor.execute("ALTER TABLE videos ADD COLUMN normalized_category TEXT;")
+            except sqlite3.OperationalError:
+                pass
+
             # --- Otimização: Criar índices para acelerar as buscas ---
             self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_videos_name ON videos (name);")
             self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_videos_category ON videos (category);")
             self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_videos_type ON videos (type);")
             self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_videos_username ON videos (username);")
+            self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_videos_normalized_name ON videos (normalized_name);")
+            self.cursor.execute("CREATE INDEX IF NOT EXISTS idx_videos_normalized_category ON videos (normalized_category);")
             # ---------------------------------------------------------
 
-
             self.conn.commit()
+
+            # Migra registros antigos que não possuem nome normalizado
+            self.cursor.execute("SELECT id, name, category FROM videos WHERE normalized_name IS NULL OR normalized_name = ''")
+            rows_to_migrate = self.cursor.fetchall()
+            if rows_to_migrate:
+                print(f"Migrando {len(rows_to_migrate)} registros antigos para normalizar nomes e categorias...")
+                updates = []
+                for row_id, r_name, r_cat in rows_to_migrate:
+                    updates.append((self.normalize_text(r_name), self.normalize_text(r_cat) if r_cat else "", row_id))
+                self.cursor.executemany("UPDATE videos SET normalized_name = ?, normalized_category = ? WHERE id = ?", updates)
+                self.conn.commit()
+                print("Migração concluída com sucesso.")
 
             print("Banco de dados inicializado com sucesso")
 
@@ -3765,19 +3799,21 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
                 temporada = "-"  # Valor padrão quando não há temporada
             # Verifica se o vídeo já existe
             self.cursor.execute('SELECT COUNT(*) FROM videos WHERE name = ?', (nome,))
+            name_norm = self.normalize_text(nome)
+            category_norm = self.normalize_text(category) if category else ""
             if self.cursor.fetchone()[0] > 0:
                 # Se existir, atualiza
                 self.cursor.execute('''
                     UPDATE videos
-                    SET url = ?, type = ?, season = ?, username = ?, category = ?
+                    SET url = ?, type = ?, season = ?, username = ?, category = ?, normalized_name = ?, normalized_category = ?
                     WHERE name = ?
-                ''', (url, tipo, temporada, username, category, nome))
+                ''', (url, tipo, temporada, username, category, name_norm, category_norm, nome))
             else:
                 # Se não existir, insere
                 self.cursor.execute('''
-                    INSERT INTO videos (name, url, type, season, username, category)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                ''', (nome, url, tipo, temporada, username, category))
+                    INSERT INTO videos (name, url, type, season, username, category, normalized_name, normalized_category)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (nome, url, tipo, temporada, username, category, name_norm, category_norm))
             self.conn.commit()
             # Atualiza o cache
             if self.db_cache_loaded:
@@ -3802,11 +3838,13 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
             # Garante que temporada não seja None
             if temporada is None:
                 temporada = "-"  # Valor padrão quando não há temporada
+            name_norm = self.normalize_text(nome)
+            category_norm = self.normalize_text(category) if category else ""
             self.cursor.execute('''
                 UPDATE videos
-                SET url = ?, type = ?, season = ?, username = ?, category = ?
+                SET url = ?, type = ?, season = ?, username = ?, category = ?, normalized_name = ?, normalized_category = ?
                 WHERE name = ?
-            ''', (url, tipo, temporada, username, category, nome))
+            ''', (url, tipo, temporada, username, category, name_norm, category_norm, nome))
             self.conn.commit()
             # Atualiza o cache
             if self.db_cache_loaded and nome in self.db_cache:

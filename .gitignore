@@ -280,3 +280,6 @@ xcuserdata/
 packages/
 Package Cache/
 dist/
+
+# Repomix
+repomix-output.xml
