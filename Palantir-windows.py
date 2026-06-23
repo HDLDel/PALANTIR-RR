@@ -534,6 +534,12 @@ class Palantir:
             # No Windows, usa creationflags para esconder o console
             base_dir = get_base_dir()
             
+            # Garante que a pasta de logs existe
+            log_dir = os.path.join(base_dir, "logs")
+            if not os.path.exists(log_dir):
+                os.makedirs(log_dir)
+            aria2c_log_path = os.path.join(log_dir, "aria2c_server.log")
+            
             # Busca aria2c.exe em múltiplos locais
             aria2c_path = None
             for candidate in [
@@ -547,13 +553,24 @@ class Palantir:
             if not aria2c_path:
                 raise FileNotFoundError("aria2c.exe não encontrado")
             
-            subprocess.Popen(
-                [aria2c_path, "--enable-rpc", "--rpc-listen-all=true"],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+            # Abre o arquivo de log para o servidor aria2c
+            self.aria2c_log_file = open(aria2c_log_path, "w", encoding="utf-8")
+            
+            self.aria2c_process = subprocess.Popen(
+                [aria2c_path, "--enable-rpc", "--rpc-listen-all=true", "--no-conf"],
+                stdout=self.aria2c_log_file,
+                stderr=subprocess.STDOUT,
                 creationflags=subprocess.CREATE_NO_WINDOW
             )
             time.sleep(2)  # Aguarda o servidor iniciar
+            
+            if self.aria2c_process.poll() is not None:
+                print(f"Aviso: aria2c falhou ao iniciar no Windows (código {self.aria2c_process.poll()}).")
+                try:
+                    with open(aria2c_log_path, "r", encoding="utf-8") as lf:
+                        print(lf.read())
+                except:
+                    pass
         except FileNotFoundError:
             messagebox.showerror("Erro", "aria2c.exe não encontrado. Por favor, coloque o arquivo na pasta do projeto.")
             sys.exit(1)
@@ -2251,8 +2268,6 @@ class Palantir:
                 local_cursor = local_conn.cursor()
                 
                 # Configurações otimizadas para velocidade na busca
-                local_cursor.execute("PRAGMA synchronous = OFF")
-                local_cursor.execute("PRAGMA journal_mode = MEMORY")
                 local_cursor.execute("PRAGMA cache_size = -10000")  # 10MB cache local
                 local_cursor.execute("PRAGMA temp_store = MEMORY")
 
@@ -3755,6 +3770,13 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
     def __del__(self):
         """Limpa os processos ao fechar o programa"""
         try:
+            # Fecha o arquivo de log do aria2c se estiver aberto
+            if hasattr(self, 'aria2c_log_file') and self.aria2c_log_file:
+                try:
+                    self.aria2c_log_file.close()
+                except:
+                    pass
+
             # Encerra o processo do aria2c iniciado pelo programa
             if hasattr(self, 'aria2c_process') and self.aria2c_process:
                 if self.aria2c_process.poll() is None:  # Se ainda está rodando

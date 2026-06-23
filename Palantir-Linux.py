@@ -366,25 +366,41 @@ class Palantir:
     def start_aria2c(self):
         """Inicia o servidor aria2c"""
         try:
+            # Garante que a pasta de logs existe
+            log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+            if not os.path.exists(log_dir):
+                os.makedirs(log_dir)
+            aria2c_log_path = os.path.join(log_dir, "aria2c_server.log")
+
             # Tenta encerrar instâncias anteriores do aria2c que possam estar travando a porta
             subprocess.run(['pkill', '-x', 'aria2c'],
                          stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL)
-            time.sleep(0.5)
+            time.sleep(1.5)
 
             aria2c_path = 'aria2c'
             print(f"Tentando aria2c do PATH: {aria2c_path}")
+            
+            # Abre o arquivo de log do servidor aria2c
+            self.aria2c_log_file = open(aria2c_log_path, "w", encoding="utf-8")
+            
             self.aria2c_process = subprocess.Popen(
-                [aria2c_path, "--enable-rpc", "--rpc-listen-all=true", "--rpc-allow-origin-all", "--daemon=false"],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+                [aria2c_path, "--enable-rpc", "--rpc-listen-all=true", "--rpc-allow-origin-all", "--daemon=false", "--no-conf"],
+                stdout=self.aria2c_log_file,
+                stderr=subprocess.STDOUT,
                 start_new_session=True
             )
             time.sleep(2)
             if self.aria2c_process.poll() is None:
                 print(f"aria2c do PATH iniciado com PID: {self.aria2c_process.pid}")
             else:
-                print(f"Aviso: aria2c falhou ao iniciar (código {self.aria2c_process.poll()}). Assumindo que já existe uma instância rodando.")
+                print(f"Aviso: aria2c falhou ao iniciar (código {self.aria2c_process.poll()}).")
+                try:
+                    with open(aria2c_log_path, "r", encoding="utf-8") as lf:
+                        print("Logs do aria2c:")
+                        print(lf.read())
+                except:
+                    pass
 
             print(f"Usando aria2c: {aria2c_path}")
 
@@ -2104,8 +2120,6 @@ class Palantir:
                 local_cursor = local_conn.cursor()
                 
                 # Configurações otimizadas para velocidade na busca
-                local_cursor.execute("PRAGMA synchronous = OFF")
-                local_cursor.execute("PRAGMA journal_mode = MEMORY")
                 local_cursor.execute("PRAGMA cache_size = -10000")  # 10MB cache local
                 local_cursor.execute("PRAGMA temp_store = MEMORY")
 
@@ -3607,6 +3621,13 @@ Erros encontrados: {self.estatisticas['erros_encontrados']}
     def __del__(self):
         """Limpa os processos ao fechar o programa"""
         try:
+            # Fecha o arquivo de log do aria2c se estiver aberto
+            if hasattr(self, 'aria2c_log_file') and self.aria2c_log_file:
+                try:
+                    self.aria2c_log_file.close()
+                except:
+                    pass
+
             # Encerra o processo do aria2c iniciado pelo programa
             if hasattr(self, 'aria2c_process') and self.aria2c_process:
                 if self.aria2c_process.poll() is None:  # Se ainda está rodando
