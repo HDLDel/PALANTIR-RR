@@ -70,6 +70,8 @@ palantir.log
 .config/
 .env
 .env.local
+config.json
+config.*.json
 *.ini
 
 # -------------------------------------------
@@ -121,13 +123,14 @@ appimagetool
 # -------------------------------------------
 # Estes arquivos DEVEM ser versionados:
 # - downloads.db (banco de dados principal)
-# - config.json (configurações padrão)
 # - Palantir.spec
 # - Palantir-Linux.spec
 # - requirements.txt
 # - Compile/ (todos os scripts de build)
-# - Players/ (pasta com players)
 # - assets/ (recursos do projeto)
+
+# Players (binários grandes)
+Players/
 
 # AI Tools
 .qwen/
@@ -283,3 +286,7 @@ dist/
 
 # Repomix
 repomix-output.xml
+
+# Video files
+*.mp4
+*.mkv
