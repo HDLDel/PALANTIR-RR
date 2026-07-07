@@ -290,3 +290,4 @@ repomix-output.xml
 # Video files
 *.mp4
 *.mkv
+deploy.py

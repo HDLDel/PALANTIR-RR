@@ -1,0 +1,20 @@
+BUS ERROR FIX - Resumo
+========================
+
+Causa: ttkthemes/ThemedTk incompatível com Tcl/Tk novo + acesso a widgets Tkinter
+       de dentro de threads secundárias em process_links().
+
+Commit de origem: 2ba1869e ("inicio")
+Surgiu agora por causa do Python 3.14.5 / Tcl/Tk atualizado do CachyOS.
+
+O que foi feito no Palantir-Linux.py:
+
+1. ttkthemes agora é opcional (try/except). Se falhar, usa tk.Tk() normal.
+2. append_to_terminal() e safe_update_interface() usam after() 
+   para agendar atualizações na thread principal do Tkinter.
+3. O texto do text_area é lido na thread principal antes de iniciar a worker thread.
+4. A thread extra que criava outra thread pra UI foi removida.
+
+Pra rodar:
+  source venv/bin/activate
+  python3 Palantir-Linux.py

@@ -1,0 +1,682 @@
+Palantir-LTS = versão bem antiga carrega via ram funcional 100%
+Palantir-MTS = versão nova 100 funcional para uso diário sem novidades 
+Palantir-RR = ultima versão com todas as novidades porem com novos bugs que são introduzidos
+Palantir-Tester = versão em pleno desenvolvimento muda constantemente.
+
+
+
+
+
+📊 Análise Completa do Projeto: Palantir-Tester
+1. 🎯 PROPÓSITO DO PROJETO
+Palantir é um gerenciador e <PLACEHOLDER> de vídeos desktop multiplataforma (Windows e Linux) desenvolvido para:
+
+Baixar vídeos de listas M3U (IPTV/streaming)
+Organizar automaticamente o conteúdo baixado por gênero usando a API do TMDB (The Movie Database)
+Gerenciar múltiplos downloads simultâneos com retomada de downloads interrompidos
+Reproduzir conteúdo através de players integrados (MPV e VLC)
+Versão atual: V3.5.30 (Março de 2026)
+
+Desenvolvedor: Hildebrando Silva (GitHub: @hildebrandoandrade)
+
+2. 🛠️ TECNOLOGIAS USADAS
+Linguagem Principal
+Python 3.8+
+Frameworks e Bibliotecas Principais
+Categoria	Bibliotecas
+Interface Gráfica	customtkinter>=5.2.0, ttkthemes>=3.2.2, Pillow>=8.0.0, tkinter (padrão)
+Downloads/HTTP	requests>=2.31.0, aria2p>=0.12.1, urllib3>=2.0.0
+Utilitários	unidecode>=1.3.8, psutil>=5.9.0, websocket-client>=1.8.0
+Logging/Sistema	loguru>=0.7.3, platformdirs>=4.3.7, colorama>=0.4.6
+Build/Compilação	pyinstaller>=6.0.0
+Banco de Dados	sqlite3 (padrão Python)
+Ferramentas Externas
+aria2c - Gerenciador de downloads em segundo plano
+MPV - Player de vídeo (exe no Windows, AppImage no Linux)
+VLC - Player de vídeo alternativo (Portable no Windows, AppImage no Linux)
+APIs Externas
+TMDB API - Para obtenção de gêneros e organização de conteúdo
+Listas M3U - Para extração de URLs de vídeos
+3. 📁 ESTRUTURA DO PROJETO
+Diretório Raiz (c:\Users\hilde\Dev\palantir-Tester\)
+palantir-Tester/
+├── 📄 Arquivos Principais Python
+│   ├── Palantir-windows.py          (4188 linhas - Versão Windows)
+│   ├── Palantir-Linux.py            (Versão Linux)
+│   ├── download_manager.py          (442 linhas - Gerenciamento de downloads)
+│   ├── database_manager.py          (484 linhas - Banco de dados)
+│   ├── search_engine.py             (361 linhas - Motor de busca)
+│   ├── m3u_handler.py               (338 linhas - Processamento M3U)
+│   ├── player_manager.py            (164 linhas - Controle de players)
+│   ├── advanced_downloader.py       (690 linhas - Download avançado)
+│   ├── organize_folders.py          (186 linhas - Organização por gênero)
+│   ├── categorias.py                (Definições de categorias)
+│   ├── config_manager.py            (Gerenciamento de configuração)
+│   ├── network_utils.py             (Utilitários de rede)
+│   ├── file_organizer.py            (Organizador de arquivos)
+│   ├── link_tester.py               (Testador de links)
+│   └── queue_viewer.py              (Visualizador de fila)
+│
+├── 🔨 Scripts de Build
+│   ├── build_windows.py             (Build Windows interativo)
+│   ├── build_linux.py               (Build Linux automatizado)
+│   ├── build_appimage.py            (Criação de AppImage)
+│   ├── install_linux.sh             (Instalação Linux)
+│   ├── compilar.bat                 (Build Windows rápido)
+│   └── setup.py                     (Setup setuptools)
+│
+├── 📋 Arquivos de Configuração
+│   ├── config.json                  (Configurações do usuário)
+│   ├── requirements.txt             (Dependências Python)
+│   ├── aria2.conf                   (Configuração aria2)
+│   ├── appimage.yml                 (Configuração AppImage)
+│   └── Ativação.yaml                (Configuração de ativação)
+│
+├── 🎮 Players (Obrigatório)
+│   └── Players/
+│       ├── mpv/
+│       │   ├── mpv.exe              (Windows)
+│       │   └── mpv.AppImage         (Linux)
+│       ├── VLCPortable/
+│       │   └── VLCPortable.exe      (Windows)
+│       ├── mpv.AppImage             (Linux)
+│       └── VLC.AppImage             (Linux)
+│
+├── 📚 Documentação
+│   ├── README.md                    (Documentação principal)
+│   ├── COMPILAR.md                  (Guia de compilação completo)
+│   ├── COMO_COMPILAR_LINUX.md       (Guia Linux detalhado)
+│   ├── COMO_EXECUTAR.md             (Instruções de execução)
+│   ├── COMO_CRIAR_APPIMAGE.md       (Guia AppImage)
+│   ├── BUILD_WINDOWS.md             (Build Windows)
+│   ├── README_COMPILADOR.md         (Guia compilador)
+│   ├── INFO_ARQUIVOS_TEMPORARIOS.md (Info arquivos temp)
+│   ├── Version.MD                   (Histórico de versões)
+│   ├── COMO_COMPILAR.txt            (Compilação em texto)
+│   └── LICENSE                      (Licença MIT)
+│
+├── 🗂️ Diretórios de Saída
+│   ├── dist/                        (Executáveis compilados)
+│   ├── build/                       (Arquivos temporários de build)
+│   └── publish/                     (Pacotes para distribuição)
+│
+├── 🧪 Testes e Downloads
+│   ├── test_downloads/              (Downloads de teste)
+│   ├── logs/                        (Logs da aplicação)
+│   └── downloaders/                 (Módulos de download)
+│
+├── 🔧 Scripts de Suporte
+│   ├── executar_palantir.bat        (Executa no Windows)
+│   ├── executar_palantir.sh         (Executa no Linux)
+│   ├── instalar_atalhos.bat         (Cria atalhos)
+│   ├── remover_atalhos.bat          (Remove atalhos)
+│   ├── criar_atalho_menu_iniciar.bat
+│   └── create_linux_menu.sh         (Cria ícone no Linux)
+│
+└── 📦 Arquivos de Build Específicos
+    ├── Palantir.spec                (Spec PyInstaller Windows)
+    ├── Palantir-Linux.spec          (Spec PyInstaller Linux)
+    ├── palantircli.spec             (Spec CLI)
+    └── downloads.db                 (Banco de dados de downloads)
+Módulos Internos
+palantir/ - Ambiente virtual Python (venv)
+4. ⚙️ FUNCIONALIDADES PRINCIPAIS
+📥 Downloads
+Funcionalidade	Descrição
+Múltiplos downloads simultâneos	Baixa vários vídeos ao mesmo tempo
+Retomada de downloads	Continua downloads interrompidos
+Barra de progresso em tempo real	Acompanhamento visual do progresso
+Controle de tentativas	Evita looping infinito em falhas
+Modo ilimitado	Opção para tentativas infinitas
+3 métodos de download	aria2c (padrão), requests, urllib3
+Detecção automática de extensão	.mp4 ou .mkv baseado no Content-Type
+📁 Organização
+Funcionalidade	Descrição
+Organização por gênero	Usa API do TMDB para classificar
+25+ categorias pré-definidas	Ação, Comédia, Drama, Terror, etc.
+Limpeza de pastas temporárias	Remove arquivos de subpastas
+Estrutura personalizável	Configuração de pastas flexível
+🔍 Busca e Indexação
+Funcionalidade	Descrição
+Busca por nome	Pesquisa normalizada (sem acentos)
+Busca por URL	Localiza vídeos por URL
+Busca por categoria	Filtra por gênero
+Busca por tipo	Filme ou Série
+Busca por servidor	Filtra por servidor de origem
+Busca por temporada	Para séries
+Cache de busca	Indexação para performance
+🎬 Reprodução
+Funcionalidade	Descrição
+MPV integrado	Player principal
+VLC integrado	Player alternativo
+Suporte a AppImage	Linux portável
+Controle de playback	Iniciar/parar reprodução
+🎨 Interface
+Funcionalidade	Descrição
+25+ temas customizáveis	Inclui modo escuro padrão
+Interface moderna	CustomTkinter com widgets estilizados
+Responsiva	Adapta-se a diferentes tamanhos
+Ícones intuitivos	Botões com emojis descritivos
+🔄 Gerenciamento de M3U
+Funcionalidade	Descrição
+Carregamento de URLs M3U	Lê listas remotas
+Parsing de EXTINF	Extrai metadados
+Extração de categoria	group-title das listas
+Detecção de séries	Identifica SxxExx
+Extração de servidor	Parse de URLs
+💾 Banco de Dados
+Funcionalidade	Descrição
+SQLite integrado	Armazenamento local
+Cache em memória	Performance otimizada
+Thread-safe	Operações seguras
+Indexação automática	Sincronização com busca
+5. 📄 ARQUIVOS DE CONFIGURAÇÃO
+config.json
+{
+  "default_download_path": "/mnt/c/Users/hilde/Downloads",
+  "user_agent": "XCIPTV-v7.0",
+  "dns_server": "1.1.1.1",
+  "theme": "black",
+  "m3u_base_url": "http://topz1001.top"
+}
+requirements.txt
+requests>=2.31.0
+aria2p>=0.12.1
+Pillow>=8.0.0
+customtkinter>=5.2.0
+unidecode>=1.3.8
+ttkthemes>=3.2.2
+psutil>=5.9.0
+urllib3>=2.0.0
+websocket-client>=1.8.0
+loguru>=0.7.3
+platformdirs>=4.3.7
+colorama>=0.4.6
+pyinstaller>=6.0.0
+aria2.conf
+Configuração do servidor aria2c para downloads (RPC, portas, limites)
+
+appimage.yml
+Configuração para criação de AppImage Linux
+
+Arquivos .spec (PyInstaller)
+Palantir.spec - Build Windows
+Palantir-Linux.spec - Build Linux
+palantircli.spec - Build CLI
+6. 📖 DOCUMENTAÇÃO DISPONÍVEL
+Arquivo	Tamanho/Conteúdo	Descrição
+README.md	Completo	Visão geral, instalação, uso, funcionalidades
+COMPILAR.md	Detalhado	Guia de compilação Windows e Linux
+COMO_COMPILAR_LINUX.md	Extensivo	Passo a passo Linux com troubleshooting
+COMO_EXECUTAR.md	Prático	Como executar e criar atalhos
+COMO_CRIAR_APPIMAGE.md	Específico	Criação de pacotes AppImage
+BUILD_WINDOWS.md	Técnico	Detalhes do build Windows
+README_COMPILADOR.md	Focado	Guia do compilador Windows
+INFO_ARQUIVOS_TEMPORARIOS.md	Técnico	Informações sobre arquivos temporários
+Version.MD	Histórico	Log completo de alterações (várias versões)
+COMO_COMPILAR.txt	Resumido	Versão em texto da compilação
+LICENSE	Legal	Licença MIT
+7. 📊 MÉTRICAS DO PROJETO
+Tamanho do Código
+Arquivo	Linhas
+Palantir-windows.py	~4.188
+Palantir-Linux.py	~4.000+
+advanced_downloader.py	690
+database_manager.py	484
+download_manager.py	442
+search_engine.py	361
+m3u_handler.py	338
+player_manager.py	164
+organize_folders.py	186
+Tamanho da Distribuição
+Componente	Windows	Linux
+Python + Bibliotecas	100-150 MB	80-120 MB
+aria2c	15 MB	5 MB
+MPV	30-50 MB	50-80 MB
+VLC	40-60 MB	80-120 MB
+Total	180-280 MB	220-340 MB
+8. 🚀 COMO COMPILAR E EXECUTAR
+Windows
+# Compilar
+python build_auto.py
+# ou
+compilar.bat
+
+# Executar
+python Palantir-windows.py
+# ou
+executar_palantir.bat
+Linux
+# Instalar dependências
+sudo ./install_linux.sh
+
+# Ativar ambiente
+source venv/bin/activate
+
+# Compilar
+python3 build_linux.py
+
+# Executar
+./dist/Palantir/Palantir
+9. 🔗 LINKS E RECURSOS EXTERNOS
+Python: https://www.python.org/
+PyInstaller: https://www.pyinstaller.org/
+TMDB API: https://www.themoviedb.org/documentation/api
+aria2: https://aria2.github.io/
+MPV: https://mpv.io/
+VLC: https://www.videolan.org/
+CustomTkinter: https://github.com/TomSchimansky/CustomTkinter
+10. ✅ CONCLUSÃO
+Palantir é um projeto maduro e bem documentado, com:
+
+✅ Arquitetura modular (múltiplos módulos especializados)
+✅ Multiplataforma (Windows e Linux com código específico)
+✅ Recursos avançados (downloads simultâneos, organização automática, busca indexada)
+✅ Documentação extensa (múltiplos guias para diferentes cenários)
+✅ Sistema de build automatizado (scripts para ambas as plataformas)
+✅ Tratamento de erros robusto (thread safety, fallbacks, logging)
+✅ Interface moderna (CustomTkinter com temas customizáveis)
+Pontos fortes:
+
+Código bem estruturado e separado por responsabilidades
+Documentação completa em Português
+Suporte a múltiplos players e formatos
+Sistema de organização automática via API TMDB
+Build automatizado com PyInstaller
+Público-alvo: Usuários que desejam baixar e organizar conteúdo de vídeo de listas M3U/IPTV de forma automatizada e com interface amigável.
+
+
+==============================================================================================================================
+
+
+MAPA COMPLETO DE DEPENDÊNCIAS - PROJETO PALANTIR-TESTER
+1. LISTA DE IMPORTAÇÕES POR ARQUIVO
+Arquivos Principais (Raiz)
+Palantir-Linux.py (4101 linhas)
+
+# Imports externos (bibliotecas)
+import tkinter as tk
+from tkinter import ttk, messagebox, filedialog
+import sqlite3
+import re
+import requests
+import threading
+from threading import Thread
+import concurrent.futures
+import customtkinter as ctk
+import os
+import webbrowser
+import unicodedata
+import aria2p
+import subprocess
+import time
+import json
+import sys
+import signal
+import traceback
+from unidecode import unidecode
+import logging
+import datetime
+import shutil
+from urllib.parse import quote
+import urllib3
+import platform
+from ttkthemes import ThemedTk
+
+# Imports internos (módulos do projeto)
+from advanced_downloader import AdvancedDownloader
+from organize_folders import organize_folders
+from categorias import PASTAS, FOLDER_MAPPING, CATEGORIAS_VALIDAS, normalizar
+Palantir-windows.py (4188 linhas)
+
+# Mesmos imports que Palantir-Linux.py
+from advanced_downloader import AdvancedDownloader
+from organize_folders import organize_folders
+from categorias import PASTAS, FOLDER_MAPPING, CATEGORIAS_VALIDAS, normalizar
+Palantir-BAZITE.py (4275 linhas)
+
+# Mesmos imports que Palantir-Linux.py
+from advanced_downloader import AdvancedDownloader
+from organize_folders import organize_folders
+from categorias import PASTAS, FOLDER_MAPPING, CATEGORIAS_VALIDAS, normalizar
+advanced_downloader.py (690 linhas)
+
+import os
+import time
+import requests
+import tkinter as tk
+from tkinter import messagebox
+import threading
+from threading import Thread
+import shutil
+# Nota: Usa sqlite3 mas não importa explicitamente (bug potencial)
+categorias.py (Módulo central de categorias)
+
+import unicodedata
+config_manager.py (308 linhas)
+
+import os
+import json
+from typing import Optional, Tuple, Dict, Any
+database_manager.py (484 linhas)
+
+import sqlite3
+import os
+from typing import Optional, Tuple, List, Dict, Any
+from tkinter import messagebox
+import threading
+download_manager.py (442 linhas)
+
+import os
+import sys
+import re
+import time
+import threading
+import subprocess
+import sqlite3
+from typing import List, Tuple, Optional, Callable
+import logging
+import aria2p
+import requests
+from tkinter import messagebox
+import tkinter as tk
+import unicodedata
+from urllib.parse import quote
+import urllib3
+m3u_handler.py (338 linhas)
+
+import re
+import requests
+import threading
+from typing import List, Tuple, Optional
+import sqlite3
+import os
+from urllib.parse import urlparse
+import logging
+player_manager.py (164 linhas)
+
+import os
+import subprocess
+import traceback
+import platform
+import sys
+from tkinter import messagebox
+search_engine.py (361 linhas)
+
+from unidecode import unidecode
+from typing import List, Dict, Any, Optional, Tuple, Union
+import threading
+import time
+network_utils.py
+
+import requests
+import subprocess
+import time
+import sys
+import os
+from typing import Tuple
+organize_folders.py (186 linhas)
+
+import os
+import requests
+import shutil
+import re
+import unicodedata
+from datetime import datetime
+from urllib.parse import quote
+from categorias import PASTAS, FOLDER_MAPPING, CATEGORIAS_VALIDAS, normalizar
+organize_folders_module.py (366 linhas)
+
+import os
+import re
+import shutil
+import time
+import requests
+import unicodedata
+import json
+import sys
+from urllib.parse import quote
+from unidecode import unidecode
+from categorias import PASTAS, normalizar, CATEGORIAS_VALIDAS
+organize_folders_wrapper.py (387 linhas)
+
+import os
+import sys
+import subprocess
+import threading
+from tkinter import messagebox
+# Importa internamente: from organize_folders_module import organize_folders
+file_organizer.py (156 linhas)
+
+import os
+import re
+from typing import Tuple, Optional
+link_tester.py (234 linhas)
+
+import tkinter as tk
+from tkinter import ttk, messagebox
+import customtkinter as ctk
+import requests
+import threading
+import os
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+queue_viewer.py (171 linhas)
+
+import tkinter as tk
+from tkinter import ttk, messagebox
+import customtkinter as ctk
+import threading
+import os
+clean_folders_module.py (168 linhas)
+
+import os
+import shutil
+import time
+import sys
+download_cli_3.py (186 linhas) - Script CLI standalone
+
+import os
+import re
+import sys
+import gzip
+from io import BytesIO
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
+setup.py
+
+from setuptools import setup, find_packages
+build_linux.py (227 linhas)
+
+import os
+import sys
+import subprocess
+import shutil
+from pathlib import Path
+build_windows.py (588 linhas)
+
+import os
+import sys
+import subprocess
+import shutil
+import time
+from pathlib import Path
+from PyInstaller.utils.hooks import collect_submodules, collect_data_files
+build_appimage.py (457 linhas)
+
+import os
+import sys
+import subprocess
+import shutil
+from pathlib import Path
+M3UFILMESCategoriaGenerator.py
+
+import requests
+import re
+import json
+from urllib.parse import unquote
+import time
+import os
+M3USERIESCategoriaGenerator.py
+
+import requests
+import re
+import json
+from urllib.parse import unquote, quote
+import time
+import os
+2. ARQUIVOS ESSENCIAIS (IMPORTADOS POR OUTROS)
+Arquivo	Importado Por	Criticidade
+categorias.py	Palantir-Linux.py, Palantir-windows.py, Palantir-BAZITE.py, organize_folders.py, organize_folders_module.py	CRÍTICO
+advanced_downloader.py	Palantir-Linux.py, Palantir-windows.py, Palantir-BAZITE.py	CRÍTICO
+organize_folders.py	Palantir-Linux.py, Palantir-windows.py, Palantir-BAZITE.py, organize_folders_wrapper.py	CRÍTICO
+database_manager.py	download_manager.py, m3u_handler.py, search_engine.py	CRÍTICO
+download_manager.py	(usado internamente pela classe Palantir)	CRÍTICO
+m3u_handler.py	(usado internamente pela classe Palantir)	CRÍTICO
+player_manager.py	(usado internamente pela classe Palantir)	CRÍTICO
+config_manager.py	(usado internamente pela classe Palantir)	CRÍTICO
+search_engine.py	(usado internamente pela classe Palantir)	CRÍTICO
+network_utils.py	(usado internamente pela classe Palantir)	CRÍTICO
+organize_folders_module.py	organize_folders_wrapper.py	MODERADO
+organize_folders_wrapper.py	(usado pela UI do Palantir)	MODERADO
+file_organizer.py	(utilitário)	BAIXA
+link_tester.py	(standalone com UI)	BAIXA
+queue_viewer.py	(usado pela UI do Palantir)	MODERADO
+clean_folders_module.py	(utilitário)	BAIXA
+3. ARQUIVOS STANDALONE (NÃO IMPORTADOS POR NINGUÉM)
+Arquivo	Tipo	Pode Deletar?
+Palantir-Linux.py	Script principal Linux	❌ NÃO (principal)
+Palantir-windows.py	Script principal Windows	❌ NÃO (principal)
+Palantir-BAZITE.py	Script principal BAZITE	⚠️ Só se não usar
+download_cli_3.py	Script CLI standalone	⚠️ Só se não usar CLI
+link_tester.py	Ferramenta de teste	⚠️ Só se não usar
+queue_viewer.py	Visualizador de fila	⚠️ Integrado ao main
+M3UFILMESCategoriaGenerator.py	Gerador de categorias	⚠️ Só se não usar
+M3USERIESCategoriaGenerator.py	Gerador de categorias	⚠️ Só se não usar
+setup.py	Setup pip	⚠️ Só se não distribuir via pip
+build_linux.py	Script de build	⚠️ Só se não compilar Linux
+build_windows.py	Script de build	⚠️ Só se não compilar Windows
+build_appimage.py	Script de build	⚠️ Só se não criar AppImage
+4. ÁRVORE DE DEPENDÊNCIAS COMPLETA
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        APLICAÇÃO PRINCIPAL                               │
+│  ┌────────────────┐  ┌─────────────────┐  ┌──────────────────┐          │
+│  │Palantir-Linux  │  │Palantir-windows │  │ Palantir-BAZITE  │          │
+│  └───────┬────────┘  └────────┬────────┘  └────────┬─────────┘          │
+│          │                    │                     │                     │
+│          └────────────────────┼─────────────────────┘                     │
+│                               │                                           │
+└───────────────────────────────┼───────────────────────────────────────────┘
+                                │
+        ┌───────────────────────┼───────────────────────┐
+        │                       │                       │
+        ▼                       ▼                       ▼
+┌───────────────┐      ┌────────────────┐     ┌─────────────────┐
+│ advanced_     │      │  organize_     │     │   categorias.py │
+│ downloader.py │      │  folders.py    │     │   (CRÍTICO)     │
+└───────────────┘      └───────┬────────┘     └─────────────────┘
+                               │
+                               ▼
+                     ┌──────────────────┐
+                     │organize_folders_ │
+                     │  module.py       │
+                     └────────┬─────────┘
+                              │
+                              ▼
+                    ┌───────────────────┐
+                    │organize_folders_  │
+                    │  wrapper.py       │
+                    └───────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    MÓDULOS DE GERENCIAMENTO                             │
+│                                                                         │
+│  ┌─────────────────┐                                                   │
+│  │ config_manager  │ ← Usado pela classe Palantir                      │
+│  └─────────────────┘                                                   │
+│                                                                         │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐     │
+│  │database_manager │◄───│ download_manager│    │  search_engine  │     │
+│  └────────┬────────┘    └────────┬────────┘    └────────┬────────┘     │
+│           │                      │                      │              │
+│           ▼                      ▼                      │              │
+│  ┌─────────────────┐    ┌─────────────────┐            │              │
+│  │  m3u_handler.py │    │ player_manager  │            │              │
+│  └─────────────────┘    └─────────────────┘            │              │
+│                                                         │              │
+│  ┌─────────────────┐                                   │              │
+│  │ network_utils   │                                   │              │
+│  └─────────────────┘                                   │              │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    FERRAMENTAS E UTILITÁRIOS                            │
+│                                                                         │
+│  ┌───────────────┐  ┌───────────────┐  ┌─────────────────────┐         │
+│  │ link_tester   │  │ queue_viewer  │  │ clean_folders_module│         │
+│  └───────────────┘  └───────────────┘  └─────────────────────┘         │
+│                                                                         │
+│  ┌───────────────┐  ┌───────────────┐  ┌─────────────────────┐         │
+│  │file_organizer │  │download_cli_3 │  │M3U*Generator scripts│         │
+│  └───────────────┘  └───────────────┘  └─────────────────────┘         │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    SCRIPTS DE BUILD                                     │
+│                                                                         │
+│  ┌───────────────┐  ┌───────────────┐  ┌─────────────────────┐         │
+│  │build_linux    │  │build_windows  │  │  build_appimage     │         │
+│  └───────────────┘  └───────────────┘  └─────────────────────┘         │
+│                                                                         │
+│  ┌───────────────┐                                                      │
+│  │   setup.py    │                                                      │
+│  └───────────────┘                                                      │
+└─────────────────────────────────────────────────────────────────────────┘
+5. ARQUIVOS QUE PODEM SER DELETADOS COM SEGURANÇA
+✅ SEGURO PARA DELETAR (se não estiver em uso):
+Arquivo	Condição
+Palantir-BAZITE.py	Se não usar a versão BAZITE
+download_cli_3.py	Se não usar interface CLI
+link_tester.py	Se não testar links M3U separadamente
+M3UFILMESCategoriaGenerator.py	Se não gerar categorias de filmes
+M3USERIESCategoriaGenerator.py	Se não gerar categorias de séries
+Scripts/ (pasta inteira)	Scripts redundantes
+setup.py	Se não distribuir via pip
+build_appimage.py	Se não criar AppImage
+⚠️ NÃO DELETAR (essenciais):
+Arquivo	Motivo
+categorias.py	Módulo central - usado por 5+ arquivos
+advanced_downloader.py	Usado pelos 3 scripts principais
+organize_folders.py	Usado pelos 3 scripts principais
+database_manager.py	Gerencia banco de dados
+download_manager.py	Gerencia downloads
+m3u_handler.py	Processa arquivos M3U
+player_manager.py	Gerencia players de vídeo
+config_manager.py	Gerencia configurações
+search_engine.py	Motor de busca
+network_utils.py	Utilitários de rede
+Palantir-Linux.py	Script principal Linux
+Palantir-windows.py	Script principal Windows
+6. RESUMO DE DEPENDÊNCIAS CRUZADAS
+Módulos Mais Importados:
+1. categorias.py          → 5 importações diretas
+2. advanced_downloader.py → 3 importações diretas
+3. organize_folders.py    → 4 importações diretas
+
+Módulos com Mais Dependências Externas:
+1. Palantir-*.py          → 20+ imports (tkinter, customtkinter, aria2p, etc.)
+2. download_manager.py    → 15+ imports
+3. organize_folders_module.py → 10+ imports
+
+Bibliotecas Externas Mais Usadas:
+1. tkinter/ctk            → Todos os scripts com UI
+2. requests               → 10+ arquivos
+3. sqlite3                → 5+ arquivos
+4. threading              → 8+ arquivos
+5. aria2p                 → Scripts principais + download_manager
+7. RECOMENDAÇÕES
+Consolidar organize_folders.py e organize_folders_module.py - Há duplicação de lógica
+Adicionar import faltante em advanced_downloader.py - Usa sqlite3 sem importar
+Remover Palantir-BAZITE.py se for redundante com as outras versões
+Unificar scripts de build - build_linux.py e build_appimage.py têm lógica similar
+Módulos críticos que precisam de testes: categorias.py, database_manager.py, download_manager.py
