@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitetura Palantir-RR",
+    "output": "architecture.html",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "desktop-flow",
+        "label": "Fluxo do Aplicativo Desktop",
+        "focus": ["user", "desktop_app", "core_engine", "local_db"],
+        "note": "Interação do usuário com a interface desktop e gerenciamento local."
+      },
+      {
+        "id": "acceleration-engine",
+        "label": "Motor de Aceleração e Download",
+        "focus": ["core_engine", "adv_downloader", "aria2c", "media_sources"],
+        "note": "Orquestração de downloads acelerados via Aria2c e divisão por segmentos."
+      }
+    ]
+  },
+  "components": [
+    { "id": "user", "type": "external", "label": "Usuário Desktop", "sublabel": "Linux / Windows App", "pos": [40, 260], "size": [130, 60] },
+    { "id": "desktop_app", "type": "frontend", "label": "Interface Palantir", "sublabel": "GUI PyQt / AppImage", "pos": [230, 260], "size": [150, 60] },
+    { "id": "core_engine", "type": "backend", "label": "Palantir Core", "sublabel": "Módulos & Automação", "pos": [450, 260], "size": [160, 60] },
+    { "id": "adv_downloader", "type": "backend", "label": "Advanced Downloader", "sublabel": "Controle de Fila & Threads", "pos": [450, 440], "size": [160, 60] },
+    { "id": "local_db", "type": "database", "label": "Base de Dados Local", "sublabel": "downloads.db / JSON", "pos": [700, 140], "size": [160, 60] },
+    { "id": "aria2c", "type": "backend", "label": "Motor Aria2c", "sublabel": "Daemon Multi-conexão", "pos": [700, 440], "size": [160, 60] },
+    { "id": "media_sources", "type": "external", "label": "Servidores de Mídia", "sublabel": "Streams & Arquivos Remotos", "pos": [960, 260], "size": [150, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Ambiente Desktop do Usuário", "wraps": ["desktop_app", "core_engine", "adv_downloader", "local_db", "aria2c"] }
+  ],
+  "connections": [
+    { "id": "u-gui", "from": "user", "to": "desktop_app", "label": "Eventos UI", "variant": "emphasis" },
+    { "id": "gui-core", "from": "desktop_app", "to": "core_engine", "label": "Comandos" },
+    { "id": "core-db", "from": "core_engine", "to": "local_db", "label": "Histórico", "fromSide": "top", "toSide": "left" },
+    { "id": "core-adv", "from": "core_engine", "to": "adv_downloader", "label": "Agendador", "fromSide": "bottom", "toSide": "top", "labelDy": 40 },
+    { "id": "adv-aria", "from": "adv_downloader", "to": "aria2c" },
+    { "id": "core-src", "from": "core_engine", "to": "media_sources", "label": "Validação URL" },
+    { "id": "aria-src", "from": "aria2c", "to": "media_sources", "label": "Download Turbo", "fromSide": "right", "toSide": "bottom" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Distribuição Desktop", "items": ["Empacotamento unificado em AppImage para Linux e binário executável para Windows", "Interface gráfica reativa construída com Python"] },
+    { "dot": "emerald", "title": "Orquestrador de Mídia", "items": ["Organizador automático de diretórios e categorias", "Controle de estado de downloads em banco SQLite local"] },
+    { "dot": "amber", "title": "Aceleração Extrema", "items": ["Integração nativa com daemon Aria2c para downloads com múltiplas conexões", "Retentativas inteligentes e controle de banda"] }
+  ]
+}

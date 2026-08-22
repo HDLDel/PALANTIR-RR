@@ -291,3 +291,10 @@ repomix-output.xml
 *.mp4
 *.mkv
 deploy.py
+
+# AI Agent skills
+.agents/
+
+# Graphify Knowledge Graph
+graphify-out/
+
