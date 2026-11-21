@@ -8,7 +8,7 @@ from urllib.parse import quote
 from categorias import PASTAS, FOLDER_MAPPING, CATEGORIAS_VALIDAS, normalizar
 
 # Chave da API atualizada
-API_KEY = "<PLACEHOLDER>"
+API_KEY = os.environ.get("TMDB_API_KEY", "")
 LANGUAGE = "pt-BR"
 
 def normalizar(texto):

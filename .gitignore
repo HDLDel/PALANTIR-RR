@@ -60,7 +60,6 @@ env/
 *.log
 logs/
 *.db
-!downloads.db
 videos.db
 palantir.log
 
@@ -298,3 +297,9 @@ deploy.py
 # Graphify Knowledge Graph
 graphify-out/
 
+
+# Segredos / artefatos gerados
+sessions.json
+login_attempts.json
+publish/
+*.patch

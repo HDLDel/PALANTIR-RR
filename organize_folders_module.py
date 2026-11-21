@@ -121,7 +121,7 @@ def obter_genero_valido(filme, log_func):
         log_func(f"🔍 Buscando gênero para: {filme}")
         
         # Chave da API do TMDB
-        API_KEY = "<PLACEHOLDER>"
+        API_KEY = os.environ.get("TMDB_API_KEY", "")
         LANGUAGE = "pt-BR"
 
         # Timeout para a requisição

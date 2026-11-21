@@ -1,1 +1,0 @@
-/home/del/Dev/listagem.md

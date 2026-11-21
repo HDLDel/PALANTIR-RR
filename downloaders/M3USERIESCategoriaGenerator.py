@@ -7,7 +7,7 @@ import os
 
 class M3UGenerator:
     def __init__(self):
-        self.tmdb_api_key = "<PLACEHOLDER>"
+        self.tmdb_api_key = os.environ.get("TMDB_API_KEY", "")
         self.base_url = "http://xtyre.top"
         self.session = requests.Session()
         
